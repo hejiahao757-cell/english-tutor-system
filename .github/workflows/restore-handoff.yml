@@ -25,7 +25,7 @@ jobs:
           set -euo pipefail
           test -d archives/handoff-chunks
           cat $(find archives/handoff-chunks -type f -name 'part-*' | sort) | base64 --decode > /tmp/english-tutor-handoff.tar.gz
-          echo "ec55a5113594f275c73980edfb5c4b7efb1c01d3a34eaba0e15d1a825f378549  /tmp/english-tutor-handoff.tar.gz" | sha256sum -c -
+          echo "3ce5f6c939cd6b42ba505c3a2d0412453e9ecb8b755ea497d47cacfb98ff6410  /tmp/english-tutor-handoff.tar.gz" | sha256sum -c -
 
       - name: Extract organized project files
         shell: bash
