@@ -1,0 +1,49 @@
+name: Restore organized handoff snapshot
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "archives/READY"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Rebuild compressed snapshot
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -d archives/handoff-chunks
+          cat $(find archives/handoff-chunks -type f -name 'part-*' | sort) | base64 --decode > /tmp/english-tutor-handoff.tar.gz
+          echo "f83922d683b3a31b0d9c01ab91bfae8b70582e58b871bb4e028db26ef608d716  /tmp/english-tutor-handoff.tar.gz" | sha256sum -c -
+
+      - name: Extract organized project files
+        shell: bash
+        run: |
+          set -euo pipefail
+          tar -xzf /tmp/english-tutor-handoff.tar.gz -C . --strip-components=1
+          rm -rf archives/handoff-chunks
+
+      - name: Commit restored files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Restore organized English tutor project snapshot"
+            git push
+          fi
