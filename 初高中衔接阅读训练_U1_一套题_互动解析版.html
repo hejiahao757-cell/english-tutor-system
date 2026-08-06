@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>初高中衔接阅读训练｜U1词汇激活·一套题</title>
+<style>
+:root{
+  --ink:#18212f;--muted:#68768a;--bg:#edf2f8;--paper:#fff;--line:#dce5f0;
+  --brand:#3458d6;--brand2:#7356e8;--good:#16865b;--warn:#c47a12;--bad:#c44350;
+  --soft:#f7f9fd;--gold:#f3b74d;--font-scale:1;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;font-size:calc(16px * var(--font-scale));line-height:1.72}
+button,input{font:inherit}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 16px;background:rgba(255,255,255,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);box-shadow:0 4px 18px rgba(30,50,90,.07)}
+.brand-mini{font-weight:900;color:var(--brand);margin-right:auto}
+.tool-btn{border:1px solid var(--line);background:#fff;color:#334155;border-radius:10px;padding:7px 11px;cursor:pointer;transition:.15s}
+.tool-btn:hover{border-color:var(--brand);color:var(--brand)}
+.tool-btn.primary{background:var(--brand);color:#fff;border-color:var(--brand)}
+.tool-btn.teacher{background:#111827;color:#fff;border-color:#111827}
+.teacher-mode .tool-btn.teacher{background:var(--good);border-color:var(--good)}
+.timer{font-variant-numeric:tabular-nums;background:#111827;color:#fff;font-weight:900;padding:7px 12px;border-radius:10px;min-width:78px;text-align:center}
+.page{max-width:1040px;margin:24px auto;padding:0 18px 80px}
+.hero{position:relative;overflow:hidden;color:#fff;border-radius:28px;padding:38px 42px;background:linear-gradient(135deg,#17347d 0%,#3458d6 55%,#7356e8 100%);box-shadow:0 18px 55px rgba(40,70,170,.24)}
+.hero:after{content:"A B C";position:absolute;right:-18px;bottom:-52px;font-size:138px;font-weight:900;opacity:.08;letter-spacing:-.08em}
+.eyebrow{font-size:13px;letter-spacing:.18em;font-weight:900;color:#dbeafe}
+.hero h1{font-size:clamp(30px,5vw,50px);line-height:1.16;margin:8px 0 13px}
+.hero p{max-width:800px;margin:0;opacity:.92}
+.hero-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:24px}
+.hero-stat{padding:13px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.12);border-radius:15px}
+.hero-stat b{display:block;font-size:24px} .hero-stat span{font-size:12px;opacity:.84}
+.student-info{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;background:#fff;border:1px solid var(--line);border-radius:16px;margin:18px 0;padding:15px 18px}
+.student-info label{font-size:13px;color:var(--muted)} .student-info input{width:100%;border:0;border-bottom:1px solid #9ba8ba;outline:0;padding:4px;background:transparent}
+.guide{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 24px;margin:18px 0}
+.guide h2{margin:0 0 8px;font-size:21px} .guide ul{margin:8px 0 0;padding-left:21px}
+.mode-card{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.mode-card>div{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+.mode-card b{display:block;margin-bottom:5px}
+.coverage-chip{display:inline-flex;align-items:center;gap:7px;background:#ecfdf5;color:#087a50;border:1px solid #b6ead6;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:800}
+.nav-pills{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0}
+.nav-pills a{text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px;color:#334155;font-weight:800}
+.nav-pills a:hover{border-color:var(--brand);color:var(--brand)}
+.set-header{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:34px 3px 14px}
+.set-header h2{margin:5px 0 0;font-size:30px} .set-badge{display:inline-block;background:var(--brand);color:#fff;border-radius:8px;padding:5px 9px;font-size:12px;font-weight:900;letter-spacing:.12em}
+.set-meta{font-size:13px;color:var(--muted)}
+.passage-card,.question-block,.translation-task,.summary-card{background:#fff;border:1px solid var(--line);border-radius:21px;padding:25px 28px;margin:14px 0;box-shadow:0 7px 24px rgba(31,41,55,.045)}
+.passage-head{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;padding-bottom:13px;margin-bottom:18px;border-bottom:1px solid var(--line)}
+.passage-label{font-size:12px;color:var(--brand);font-weight:900;letter-spacing:.08em}
+.passage-head h3{margin:5px 0 0;font-size:25px} .passage-meta{font-size:12px;color:var(--muted);background:var(--soft);padding:6px 10px;border-radius:999px;white-space:nowrap}
+.passage-text{font-family:Georgia,"Times New Roman",serif;font-size:1.04em;line-height:1.92}
+.passage-text p{margin:0 0 14px}
+.passage-titleline{font-family:"Microsoft YaHei",sans-serif;font-weight:900;letter-spacing:.03em;margin-bottom:12px;white-space:pre-line}
+.activity-block{padding:10px 12px;border-left:3px solid #d8e1f8;background:#fbfcff;border-radius:8px}
+.notes-title{font-family:"Microsoft YaHei",sans-serif;font-weight:900;margin-top:16px;color:#334155}
+.note-line{font-family:"Microsoft YaHei",sans-serif;font-size:.95em;margin:5px 0!important}
+.tw{border-radius:3px;transition:.15s}
+.show-target .tw{background:linear-gradient(transparent 58%,rgba(255,193,78,.35) 0);border-bottom:2px dotted #e2a030;cursor:pointer}
+.feedback-strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:17px;padding:11px 13px;border-radius:12px;background:#f1fbf7;color:#176b50;font-size:13px}
+.section-kicker{font-size:12px;color:var(--brand);font-weight:900;letter-spacing:.1em}
+.question-block>h3,.translation-task>h3{margin:2px 0 12px}
+.question{border-top:1px dashed var(--line);padding:18px 0}
+.question:first-of-type{border-top:0}
+.q-head{display:flex;align-items:flex-start;gap:10px} .q-head h4{margin:2px 0 13px;font-size:16px;line-height:1.55}
+.qnum{display:inline-grid;place-items:center;min-width:29px;height:29px;border-radius:9px;background:#edf2ff;color:var(--brand);font-weight:900}
+.options{display:grid;grid-template-columns:1fr 1fr;gap:9px 14px;margin-left:39px}
+.option{display:flex;align-items:flex-start;gap:9px;border:1px solid var(--line);border-radius:12px;padding:10px 12px;cursor:pointer;transition:.15s}
+.option:hover{border-color:#9fb1ed;background:#f8faff} .option input{margin-top:5px} .letter{font-weight:900;color:var(--brand)}
+.evidence-line{margin:12px 0 0 39px;color:#8290a4;font-size:13px}
+.teacher-control{display:none} .teacher-mode .teacher-control{display:block}
+.explain-panel,.passage-translation{margin:14px 0 0 39px;border:1px solid #cfe0f7;border-radius:14px;overflow:hidden;background:#fbfdff}
+.passage-translation{margin-left:0}
+.explain-panel summary,.passage-translation summary{list-style:none;cursor:pointer;padding:10px 13px;background:#edf4ff;color:#3155b4;font-weight:800;user-select:none}
+.explain-panel summary::-webkit-details-marker,.passage-translation summary::-webkit-details-marker{display:none}
+.explain-panel summary .open,.passage-translation summary .open{display:none}
+.explain-panel[open] summary .closed,.passage-translation[open] summary .closed{display:none}
+.explain-panel[open] summary .open,.passage-translation[open] summary .open{display:inline}
+.explain-body{padding:15px 16px;background:#fff} .answer-badge{display:inline-block;background:#e8f8f1;color:var(--good);font-weight:900;border-radius:9px;padding:6px 10px;margin-bottom:10px}
+.explain-grid,.flow-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.explain-grid>div,.flow-grid>div{background:var(--soft);border-radius:11px;padding:11px 13px}
+.explain-grid p,.flow-grid p{margin:5px 0 0} .quote{font-family:Georgia,serif;color:#405477}
+.trap-box{margin-top:10px;border-left:3px solid #efb655;padding:8px 11px;background:#fffbf4;border-radius:0 9px 9px 0}
+.trap-box ul{margin:6px 0 0;padding-left:20px} .skill-box{margin-top:10px;background:#f0f8ff;border:1px solid #d3e7fb;border-radius:10px;padding:9px 12px}
+.translation-cn{padding:16px 18px;background:#fff;color:#344154;line-height:1.8}
+.correct-choice{border-color:#2b9a70!important;background:#effbf6!important} .wrong-choice{border-color:#d95763!important;background:#fff3f4!important}
+.translation-task{margin-top:30px} .instruction{color:var(--muted);margin-top:-7px}
+.translation-item{display:grid;grid-template-columns:46px 1fr;gap:12px;border-top:1px dashed var(--line);padding:17px 0}
+.translation-item:first-of-type{border-top:0}
+.t-index{width:35px;height:35px;display:grid;place-items:center;background:#111827;color:#fff;border-radius:10px;font-weight:900}
+.eng{font-family:Georgia,"Times New Roman",serif;font-size:1.05em;margin:0 0 8px}
+.answer-lines i{display:block;border-bottom:1px solid #aeb9c9;height:25px}
+.translation-explain{margin-left:0}
+.sense-tip{margin-top:10px;background:#fff7e8;border:1px solid #f2d493;border-radius:11px;padding:10px 13px}
+.summary-card h3{margin-top:0} .diagnosis-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.diagnosis-grid label{display:flex;flex-direction:column;color:var(--muted);font-size:13px} .diagnosis-grid input{border:0;border-bottom:1px solid #9daabd;padding:7px 2px;outline:0}
+.diagnosis-grid .wide{grid-column:1/-1}
+.teacher-tip{background:#fff8ea;border:1px solid #f3d08c;border-radius:14px;padding:14px 16px;margin:16px 0;color:#715018}
+.teacher-tip b{color:#9c6512}
+.tooltip{position:fixed;z-index:99;background:#111827;color:#fff;border-radius:10px;padding:8px 11px;font-size:13px;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:290px;pointer-events:none}
+.score-box{position:fixed;right:18px;bottom:18px;z-index:100;background:#111827;color:#fff;padding:14px 17px;border-radius:13px;box-shadow:0 12px 35px rgba(0,0,0,.25);display:none}
+.footer-note{text-align:center;color:#7b8798;font-size:12px;margin-top:28px}
+@media(max-width:760px){
+  .hero{padding:28px 23px} .hero-grid{grid-template-columns:1fr 1fr} .student-info{grid-template-columns:1fr}
+  .mode-card{grid-template-columns:1fr} .options{grid-template-columns:1fr;margin-left:0} .evidence-line{margin-left:0}
+  .explain-panel{margin-left:0} .explain-grid,.flow-grid{grid-template-columns:1fr} .passage-head{flex-direction:column} .passage-meta{white-space:normal}
+  .diagnosis-grid{grid-template-columns:1fr} .diagnosis-grid .wide{grid-column:auto}
+}
+@media print{
+  body{background:#fff;font-size:12pt} .topbar,.nav-pills,.teacher-tip{display:none!important} .page{max-width:none;margin:0;padding:0}
+  .hero{box-shadow:none;border-radius:0;padding:24px} .passage-card,.question-block,.translation-task,.summary-card{box-shadow:none;break-inside:auto}
+  .student-print .teacher-control{display:none!important}
+  .teacher-print .teacher-control{display:block!important}
+  .teacher-print details{display:block} .teacher-print details>summary{display:none} .teacher-print details:not([open])>*:not(summary){display:block}
+}
+</style>
+</head>
+<body class="student-mode">
+<div class="topbar">
+  <div class="brand-mini">英语衔接课 · U1词汇激活</div>
+  <button class="tool-btn teacher" id="teacherBtn" onclick="toggleTeacherMode()">进入讲解模式</button>
+  <button class="tool-btn" onclick="toggleTargets()">显示U1目标词</button>
+  <button class="tool-btn teacher-control" onclick="expandAll()">全部展开解析</button>
+  <button class="tool-btn teacher-control" onclick="collapseAll()">全部收起解析</button>
+  <button class="tool-btn teacher-control" onclick="gradeAll()">批改选择题</button>
+  <button class="tool-btn" onclick="fontScale(.08)">A+</button>
+  <button class="tool-btn" onclick="fontScale(-.08)">A−</button>
+  <button class="tool-btn" onclick="printMode('student')">打印学生版</button>
+  <span class="timer" id="timer" onclick="toggleTimer()" title="点击开始/暂停">00:00</span>
+</div>
+
+<main class="page">
+  <section class="hero">
+    <div class="eyebrow">BRIDGE TO HIGH SCHOOL ENGLISH</div>
+    <h1>初高中衔接阅读训练 · U1词汇激活</h1>
+    <p>高考阅读题型外壳，难度控制在初中毕业—高一入门。目标不是逐词翻译，而是把已经背过的词真正变成句意、文章理解和做题得分。</p>
+    <div class="hero-grid">
+      <div class="hero-stat"><b>1</b><span>完整套题</span></div>
+      <div class="hero-stat"><b>3</b><span>A / B / C 三篇</span></div>
+      <div class="hero-stat"><b>11</b><span>阅读选择题</span></div>
+      <div class="hero-stat"><b>10</b><span>重点句英译中</span></div>
+    </div>
+  </section>
+
+  <section class="student-info">
+    <label>姓名<input type="text" placeholder="________________"></label>
+    <label>日期<input type="text" placeholder="________"></label>
+    <label>用时<input type="text" placeholder="________ 分钟"></label>
+  </section>
+
+  <section class="guide">
+    <h2>使用方式</h2>
+    <span class="coverage-chip">U1原词自然复现 186 / 309 = 60.2%</span>
+    <ul>
+      <li><b>第一遍：考试模式。</b>先不显示目标词、不看答案，按照 A → B → C 完成阅读。</li>
+      <li><b>第二遍：讲解模式。</b>老师点击“进入讲解模式”，逐题打开答案、定位依据和干扰项解析。</li>
+      <li><b>第三遍：词汇正反馈。</b>点击“显示U1目标词”，让学生直观看到：背过的词已经真正进入高中题型文章。</li>
+      <li><b>翻译训练：</b>先说大意，再抓主干、切意群，最后才看自然中文；目标是逐渐摆脱逐词翻译。</li>
+    </ul>
+  </section>
+
+  <section class="mode-card">
+    <div><b>学生模式</b>答案按钮全部隐藏，避免网课屏幕共享时提前泄题；适合独立完成。</div>
+    <div><b>讲解模式</b>每道题旁边出现“显示答案与解析”开关，打开显示、收起即消失；全文翻译同样可单独控制。</div>
+  </section>
+
+  <div class="teacher-tip teacher-control">
+    <b>网课建议：</b>不要一上来打开全部解析。学生做完哪一题，就只打开哪一题；讲完立即收起，让屏幕始终保持干净。
+  </div>
+
+  <nav class="nav-pills">
+    <a href="#passage-a">A篇 应用文</a>
+    <a href="#passage-b">B篇 故事类</a>
+    <a href="#passage-c">C篇 说明议论</a>
+    <a href="#translation">英译中</a>
+    <a href="#diagnosis">课后诊断</a>
+  </nav>
+
+  <header class="set-header">
+    <div><span class="set-badge">SET 01</span><h2>初高中衔接 · 第一单元词汇应用</h2></div>
+    <div class="set-meta">建议独立阅读 35—45 分钟｜课堂讲解约 120 分钟</div>
+  </header>
+
+  
+    <section class="passage-card" id="passage-a">
+      <header class="passage-head">
+        <div><span class="passage-label">A篇 · 应用文 · City Activity Day</span><h3>应用文 · City Activity Day</h3></div>
+        <div class="passage-meta">3题｜快速定位与信息匹配</div>
+      </header>
+      <div class="passage-text"><div class="passage-titleline">CITY <span class="tw" data-word="activity">ACTIVITY</span> DAY — Saturday, July 25</div>
+<p>Place: East Lake Youth Centre</p>
+<p>The centre will <span class="tw" data-word="advertise">advertise</span> four activities for students aged 13–16. Read each <span class="tw" data-word="advertisement">advertisement</span> and choose what interests you.</p>
+<p class="activity-block">A. PAST COMES <span class="tw" data-word="alive">ALIVE</span> — 9:00, <span class="tw" data-word="main">Main</span> Hall</p>
+<p>Meet an <span class="tw" data-word="actor">actor</span> and an <span class="tw" data-word="actress">actress</span> who will <span class="tw" data-word="act">act</span> out a <span class="tw" data-word="lively">lively</span> <span class="tw" data-word="scene">scene</span> from an <span class="tw" data-word="ancient">ancient</span> city. The <span class="tw" data-word="cast">cast</span> will show the <span class="tw" data-word="style">style</span> of clothes worn by different groups. Each <span class="tw" data-word="caption">caption</span> explains a <span class="tw" data-word="main">main</span> <span class="tw" data-word="symbol">symbol</span>, and the clothes <span class="tw" data-word="represent">represent</span> different groups from the past. A student will give a five-minute <span class="tw" data-word="presentation">presentation</span> before the <span class="tw" data-word="live">live</span> show. After it, the <span class="tw" data-word="audience">audience</span> may ask questions <span class="tw" data-word="aloud">aloud</span> through a <span class="tw" data-word="loudspeaker">loudspeaker</span>. A school <span class="tw" data-word="representative">representative</span> will record the <span class="tw" data-word="activity">activity</span> for a later <span class="tw" data-word="broadcast">broadcast</span>. Anyone who wants to <span class="tw" data-word="admire">admire</span> old art or improve <span class="tw" data-word="presentation">presentation</span> <span class="tw" data-word="ability">ability</span> may enjoy it. Each <span class="tw" data-word="spectator">spectator</span> may <span class="tw" data-word="receive">receive</span> a small <span class="tw" data-word="gift">gift</span>, and the centre will <span class="tw" data-word="publish">publish</span> some questions later.</p>
+<p class="activity-block">B. <span class="tw" data-word="nature">NATURE</span> <span class="tw" data-word="lab">LAB</span> — 10:20, Room 204</p>
+<p>Take part in an <span class="tw" data-word="inspection">inspection</span> of leaves, weeds and small bushes. <span class="tw" data-word="inspect">Inspect</span> how a leaf <span class="tw" data-word="surface">surface</span> can <span class="tw" data-word="absorb">absorb</span> water, use a <span class="tw" data-word="brush">brush</span> to <span class="tw" data-word="wipe">wipe</span> away dust, and <span class="tw" data-word="spray">spray</span> water to compare plants. The teacher will <span class="tw" data-word="highlight">highlight</span> how <span class="tw" data-word="living">living</span> things <span class="tw" data-word="survive">survive</span> in the <span class="tw" data-word="wild">wild</span> and how people can <span class="tw" data-word="maintain">maintain</span> a healthy <span class="tw" data-word="natural">natural</span> environment. The room contains basic <span class="tw" data-word="lab">lab</span> facilities and a <span class="tw" data-word="machine">machine</span> that can <span class="tw" data-word="enlarge">enlarge</span> pictures. <span class="tw" data-word="follow">Follow</span> the <span class="tw" data-word="standard">standard</span> <span class="tw" data-word="procedure">procedure</span>. At the end, students <span class="tw" data-word="gather">gather</span> near the <span class="tw" data-word="blackboard">blackboard</span> to compare results and learn the <span class="tw" data-word="concept">concept</span> of <span class="tw" data-word="sustainability">sustainability</span>.</p>
+<p class="activity-block">C. <span class="tw" data-word="castle">CASTLE</span> <span class="tw" data-word="adventure">ADVENTURE</span> — 14:00, City Museum</p>
+<p>Get <span class="tw" data-word="virtual">virtual</span> <span class="tw" data-word="access">access</span> to an <span class="tw" data-word="ancient">ancient</span> <span class="tw" data-word="castle">castle</span> and <span class="tw" data-word="palace">palace</span>. The <span class="tw" data-word="gallery">gallery</span> is <span class="tw" data-word="accessible">accessible</span> to all students, and the centre can <span class="tw" data-word="accept">accept</span> 30 visitors at a time. See <span class="tw" data-word="vivid">vivid</span> pictures, a <span class="tw" data-word="memorial">memorial</span> and a <span class="tw" data-word="monument">monument</span>, and learn how each <span class="tw" data-word="symbol">symbol</span> can <span class="tw" data-word="remind">remind</span> people of an <span class="tw" data-word="ancestor">ancestor</span>. Then work <span class="tw" data-word="together">together</span> to <span class="tw" data-word="escape">escape</span> from a “locked room”. <span class="tw" data-word="inspect">Inspect</span> a map, <span class="tw" data-word="calculate">calculate</span> the <span class="tw" data-word="exact">exact</span> way, <span class="tw" data-word="count">count</span> the steps, <span class="tw" data-word="ascend">ascend</span> a short steps, pass a <span class="tw" data-word="chain">chain</span>, <span class="tw" data-word="descend">descend</span>, press the correct <span class="tw" data-word="button">button</span> and <span class="tw" data-word="switch">switch</span> on a light. After a ten-second <span class="tw" data-word="countdown">countdown</span>, the final door opens. <span class="tw" data-word="behave">Behave</span> well and <span class="tw" data-word="follow">follow</span> all <span class="tw" data-word="advice">advice</span>.</p>
+<p class="activity-block">D. <span class="tw" data-word="survival">SURVIVAL</span> ON WATER — 15:20, Training Pool</p>
+<p>Learn how to <span class="tw" data-word="act">act</span> when <span class="tw" data-word="trouble">trouble</span> happens <span class="tw" data-word="aboard">aboard</span> a small boat. Before you <span class="tw" data-word="board">board</span>, a <span class="tw" data-word="captain">captain</span> will <span class="tw" data-word="check">check</span> every life <span class="tw" data-word="belt">belt</span>, <span class="tw" data-word="rope">rope</span> and <span class="tw" data-word="strap">strap</span>. Learn to <span class="tw" data-word="fasten">fasten</span> a <span class="tw" data-word="loose">loose</span> <span class="tw" data-word="strap">strap</span>, keep a <span class="tw" data-word="rope">rope</span> <span class="tw" data-word="tight">tight</span>, judge water <span class="tw" data-word="depth">depth</span>, and <span class="tw" data-word="react">react</span> if someone falls below the <span class="tw" data-word="surface">surface</span>. The <span class="tw" data-word="captain">captain</span> will explain how body <span class="tw" data-word="weight">weight</span> can <span class="tw" data-word="affect">affect</span> balance. The <span class="tw" data-word="main">main</span> aim is to help students <span class="tw" data-word="remain">remain</span> calm and take correct <span class="tw" data-word="action">action</span> instead of trying to <span class="tw" data-word="fight">fight</span> the water. Students must be <span class="tw" data-word="able">able</span> to swim 25 metres.</p>
+<div class="notes-title">NOTES</div>
+<p class="note-line">• Each <span class="tw" data-word="activity">activity</span> costs 15 yuan. Any three cost 35 yuan <span class="tw" data-word="altogether">altogether</span>, a 10-yuan <span class="tw" data-word="discount">discount</span>.</p>
+<p class="note-line">• Write your name at the <span class="tw" data-word="counter">counter</span> ten minutes early. The <span class="tw" data-word="receptionist">receptionist</span> will give you a <span class="tw" data-word="receipt">receipt</span>. A <span class="tw" data-word="calendar">calendar</span> shows the <span class="tw" data-word="usual">usual</span> <span class="tw" data-word="activity">activity</span> times.</p>
+<p class="note-line">• Students under 14 must come with an adult.</p>
+<p class="note-line">• The centre may <span class="tw" data-word="change">change</span> an <span class="tw" data-word="activity">activity</span> if the weather becomes <span class="tw" data-word="abnormal">abnormal</span>.</p></div>
+      <div class="feedback-strip teacher-control">
+        <span>本篇自然复现 U1 原词 <b>108</b> 个</span>
+        <span>讲解时建议先让学生说：“哪些词我真的用上了？”</span>
+      </div>
+      <details class="teacher-control passage-translation">
+        <summary><span class="closed">显示全文翻译</span><span class="open">收起全文翻译</span></summary>
+        <div class="translation-cn">城市活动日——7月25日，星期六<br>地点：东湖青少年中心<br><br>中心将面向13—16岁的学生推出四项活动。阅读每项活动介绍，选择你感兴趣的项目。<br><br>A. 过去“活”起来——9:00，主大厅<br>你将见到一名男演员和一名女演员，他们会表演一段古代城市生活的生动场景。演员阵容会展示不同群体过去所穿服装的风格。每条说明文字都会解释一个主要象征，服装也代表过去不同的人群。一名学生会在现场表演前做一个五分钟的展示。结束后，观众可以通过扩音器大声提问。学校的一名代表会录下活动，之后用于播出。喜欢欣赏古老艺术或想提高展示能力的学生可能会喜欢这个项目。每位观众都有机会收到一份小礼物，中心之后还会公布部分问题。<br><br>B. 自然实验室——10:20，204室<br>参加一次对树叶、杂草和小灌木的简单观察。你会检查叶片表面如何吸收水，用软刷擦去灰尘，并喷少量水来比较不同植物。老师会重点讲解生物如何在野外生存，以及人们怎样维护健康的自然环境。房间里有基础实验设施和一台能够放大图片的机器。请按照标准步骤操作。最后，学生会在黑板旁集合、比较结果，并了解“可持续性”这一概念。<br><br>C. 城堡冒险——14:00，市博物馆<br>通过虚拟方式进入一座古老城堡和宫殿。画廊对所有学生开放。你会看到生动的图片、纪念物和纪念碑，并了解每个象征如何让人想起祖先。之后，大家合作逃出一间“密室”：查看地图、计算准确路线、数步数、走上一小段台阶、经过一条链子、向下走、按下正确按钮并打开灯。十秒倒计时结束后，最后一扇门会打开。请文明参与，并遵守所有建议。<br><br>D. 水上生存——15:20，训练池<br>学习在小船上遇到麻烦时应该怎样行动。上船前，船长会检查每一件救生带、绳子和带子。你会学习怎样系紧松掉的带子、拉紧绳子、判断水深，以及有人落到水面下时该怎样反应。船长还会解释体重如何影响平衡。主要目标是帮助学生保持冷静并采取正确行动，而不是试图和水硬抗。参加者必须能够游25米。<br><br>注意事项<br>• 每项活动15元，任选三项共35元，相当于优惠10元。<br>• 请提前十分钟到柜台写下姓名。接待员会给你收据，柜台旁的日历显示平常的活动时间。<br>• 14岁以下学生必须由成年人陪同。<br>• 如果天气出现异常，中心可能调整活动。</div>
+      </details>
+    </section>
+    <section class="question-block">
+      <div class="section-kicker">A篇题目</div>
+      <h3>信息定位</h3>
+      
+    <article class="question" data-answer="1" id="q1">
+      <div class="q-head">
+        <span class="qnum">1</span>
+        <h4>What can students do in PAST COMES ALIVE?</h4>
+      </div>
+      <div class="options"><label class="option">
+          <input type="radio" name="q1" value="0">
+          <span class="letter">A</span><span>Learn how to swim in deep water.</span>
+        </label><label class="option">
+          <input type="radio" name="q1" value="1">
+          <span class="letter">B</span><span>Ask questions after the live show.</span>
+        </label><label class="option">
+          <input type="radio" name="q1" value="2">
+          <span class="letter">C</span><span>Study how wild plants survive.</span>
+        </label><label class="option">
+          <input type="radio" name="q1" value="3">
+          <span class="letter">D</span><span>Escape from a virtual locked room.</span>
+        </label></div>
+      <div class="evidence-line">证据定位：____________________________________________</div>
+      <details class="teacher-control explain-panel">
+        <summary><span class="closed">显示答案与解析</span><span class="open">收起答案与解析</span></summary>
+        <div class="explain-body">
+          <div class="answer-badge">正确答案：B</div>
+          <div class="explain-grid">
+            <div><b>为什么选它</b><p>原文写明，表演结束后观众可以通过扩音器大声提问。因此答案是 B。</p></div>
+            <div><b>原文定位</b><p class="quote">“After it, the audience may ask questions aloud through a loudspeaker.”</p></div>
+          </div>
+          <div class="trap-box"><b>干扰项怎么错</b><ul><li>A 对应 D 篇活动内容，属于张冠李戴。</li><li>C 对应 B 篇 Nature Lab，活动对象偷换。</li><li>D 对应 C 篇 Castle Adventure，不是 Live History。</li></ul></div>
+          <div class="skill-box"><b>本题训练：</b>A篇信息定位：先抓题干动作 ask questions，再回原文寻找同义信息。</div>
+        </div>
+      </details>
+    </article>
+    <article class="question" data-answer="1" id="q2">
+      <div class="q-head">
+        <span class="qnum">2</span>
+        <h4>Which activity is best for a student who wants to learn how plants live?</h4>
+      </div>
+      <div class="options"><label class="option">
+          <input type="radio" name="q2" value="0">
+          <span class="letter">A</span><span>PAST COMES ALIVE.</span>
+        </label><label class="option">
+          <input type="radio" name="q2" value="1">
+          <span class="letter">B</span><span>NATURE LAB.</span>
+        </label><label class="option">
+          <input type="radio" name="q2" value="2">
+          <span class="letter">C</span><span>CASTLE ADVENTURE.</span>
+        </label><label class="option">
+          <input type="radio" name="q2" value="3">
+          <span class="letter">D</span><span>SURVIVAL ON WATER.</span>
+        </label></div>
+      <div class="evidence-line">证据定位：____________________________________________</div>
+      <details class="teacher-control explain-panel">
+        <summary><span class="closed">显示答案与解析</span><span class="open">收起答案与解析</span></summary>
+        <div class="explain-body">
+          <div class="answer-badge">正确答案：B</div>
+          <div class="explain-grid">
+            <div><b>为什么选它</b><p>Nature Lab 让学生观察叶片、杂草、灌木，并学习野生植物如何生存，和题干“how plants live”直接对应。</p></div>
+            <div><b>原文定位</b><p class="quote">“The teacher will highlight how living things survive in the wild...”</p></div>
+          </div>
+          <div class="trap-box"><b>干扰项怎么错</b><ul><li>A 主要是古代城市、表演与文化。</li><li>C 主要是虚拟城堡和解谜。</li><li>D 主要是水上安全训练。</li></ul></div>
+          <div class="skill-box"><b>本题训练：</b>A篇需求匹配：题干不是原词照抄，要把 plants live 对应到 living things / survive。</div>
+        </div>
+      </details>
+    </article>
+    <article class="question" data-answer="0" id="q3">
+      <div class="q-head">
+        <span class="qnum">3</span>
+        <h4>What must a student be able to do before joining SURVIVAL ON WATER?</h4>
+      </div>
+      <div class="options"><label class="option">
+          <input type="radio" name="q3" value="0">
+          <span class="letter">A</span><span>Swim 25 metres.</span>
+        </label><label class="option">
+          <input type="radio" name="q3" value="1">
+          <span class="letter">B</span><span>Use a machine.</span>
+        </label><label class="option">
+          <input type="radio" name="q3" value="2">
+          <span class="letter">C</span><span>Give a presentation.</span>
+        </label><label class="option">
+          <input type="radio" name="q3" value="3">
+          <span class="letter">D</span><span>Visit the centre with a teacher.</span>
+        </label></div>
+      <div class="evidence-line">证据定位：____________________________________________</div>
+      <details class="teacher-control explain-panel">
+        <summary><span class="closed">显示答案与解析</span><span class="open">收起答案与解析</span></summary>
+        <div class="explain-body">
+          <div class="answer-badge">正确答案：A</div>
+          <div class="explain-grid">
+            <div><b>为什么选它</b><p>原文最后明确给出参加条件：学生必须能够游25米。</p></div>
+            <div><b>原文定位</b><p class="quote">“Students must be able to swim 25 metres.”</p></div>
+          </div>
+          <div class="trap-box"><b>干扰项怎么错</b><ul><li>B 是 Nature Lab 的设施，不是参加条件。</li><li>C 是 Live History 的内容，不是必须能力。</li><li>D 原文只说 14 岁以下需成人陪同，并没有说必须和老师同行。</li></ul></div>
+          <div class="skill-box"><b>本题训练：</b>A篇直接细节题：看到 must / be able to 这类限制条件要优先定位。</div>
+        </div>
+      </details>
+    </article>
+    </section>
+    
+  
+    <section class="passage-card" id="passage-b">
+      <header class="passage-head">
+        <div><span class="passage-label">B篇 · 故事类 · The Rope by the River</span><h3>故事类 · The Rope by the River</h3></div>
+        <div class="passage-meta">4题｜情节、原因、人物选择与主旨</div>
+      </header>
+      <div class="passage-text"><div class="passage-titleline">THE <span class="tw" data-word="rope">ROPE</span> BY THE RIVER</div>
+<p>Sixteen-year-old Ben joined a school <span class="tw" data-word="adventure">adventure</span> in a <span class="tw" data-word="wide">wide</span> forest area near a river. The group contained eight students, two teachers and a local guide. Before they left, the guide made an <span class="tw" data-word="inspection">inspection</span> of their bags, checked that everyone had <span class="tw" data-word="adequate">adequate</span> water, and advised them to stay <span class="tw" data-word="together">together</span>, <span class="tw" data-word="follow">follow</span> the marked way and never <span class="tw" data-word="abandon">abandon</span> the group for a better picture.</p>
+<p>At first, everything was <span class="tw" data-word="normal">normal</span>. The <span class="tw" data-word="landscape">landscape</span> was beautiful and the students were <span class="tw" data-word="lively">lively</span>. Ben admired the <span class="tw" data-word="deep">deep</span> green <span class="tw" data-word="jungle">jungle</span> and <span class="tw" data-word="wild">wild</span> birds above the trees. He took pictures of every <span class="tw" data-word="bush">bush</span>, <span class="tw" data-word="weed">weed</span> and <span class="tw" data-word="strange">strange</span> plant he encountered. He was so absorbed in the <span class="tw" data-word="scenery">scenery</span> that he did not <span class="tw" data-word="perceive">perceive</span> the others moving ahead.</p>
+<p>When Ben looked up, the group was <span class="tw" data-word="absent">absent</span>. He called <span class="tw" data-word="aloud">aloud</span>, but there was no <span class="tw" data-word="reaction">reaction</span>. His heart seemed to sink. He began to <span class="tw" data-word="doubt">doubt</span> whether he had followed the correct way. The situation was <span class="tw" data-word="terrible">terrible</span> and frightening, but he recalled the guide’s <span class="tw" data-word="advice">advice</span>: “Do not turn one problem into two.”</p>
+<p>Ben remained where he was and assessed what he had. His phone could not work, but his bag contained water, a bright cloth and a long <span class="tw" data-word="string">string</span>. He tied the cloth to a branch and called <span class="tw" data-word="aloud">aloud</span> three times.</p>
+<p>Soon he heard a cry from the other side of the river. A <span class="tw" data-word="fellow">fellow</span> student, Sam, had slipped and hurt his leg. Two students were with him, but the water was becoming deeper. Ben saw a rescue <span class="tw" data-word="rope">rope</span> fixed to a strong tree, part of an old rescue <span class="tw" data-word="facility">facility</span>.</p>
+<p>Ben did not cross. He told the others to <span class="tw" data-word="remain">remain</span> calm. He inspected the <span class="tw" data-word="rope">rope</span>, found one end <span class="tw" data-word="loose">loose</span> and tightened it around the tree. Then he threw the free end across a small part of the river. Sam’s friends fastened it around another tree. The <span class="tw" data-word="rope">rope</span> was not a bridge, but its <span class="tw" data-word="strength">strength</span> gave them something strong to hold while they moved to safer ground. Ben warned them not to rush because one wrong <span class="tw" data-word="action">action</span> could increase the <span class="tw" data-word="threat">threat</span>.</p>
+<p>The teachers soon arrived after hearing Ben’s calls. Sam’s leg had begun to <span class="tw" data-word="swell">swell</span>, but there was no serious damage or other <span class="tw" data-word="symptom">symptom</span>. Everyone returned safely. Ben later said that the <span class="tw" data-word="scene">scene</span> had looked <span class="tw" data-word="horrible">horrible</span>, but calm <span class="tw" data-word="action">action</span> had reduced the danger.</p>
+<p>The guide praised Ben. ““Being brave does not mean you are not afraid,” he said. “It means you still have the <span class="tw" data-word="ability">ability</span> to <span class="tw" data-word="act">act</span> well.””</p>
+<p>Ben’s <span class="tw" data-word="main">main</span> <span class="tw" data-word="achievement">achievement</span> was not completing a <span class="tw" data-word="spectacular">spectacular</span> <span class="tw" data-word="venture">venture</span>. It was learning that correct <span class="tw" data-word="action">action</span> and <span class="tw" data-word="respect">respect</span> for rules can <span class="tw" data-word="strengthen">strengthen</span> a group and help people <span class="tw" data-word="survive">survive</span> <span class="tw" data-word="trouble">trouble</span> <span class="tw" data-word="together">together</span>.</p></div>
+      <div class="feedback-strip teacher-control">
+        <span>本篇自然复现 U1 原词 <b>47</b> 个</span>
+        <span>讲解时建议先让学生说：“哪些词我真的用上了？”</span>
+      </div>
+      <details class="teacher-control passage-translation">
+        <summary><span class="closed">显示全文翻译</span><span class="open">收起全文翻译</span></summary>
+        <div class="translation-cn">河边的绳子<br><br>16岁的本参加了一次学校组织的冒险活动，地点在一条河附近的大片森林区域。队伍里有8名学生、2名老师和1名当地向导。出发前，向导检查了大家的背包，确认每个人都有足够的水，并建议大家始终待在一起，沿着标记好的路线前进，不要只是为了拍到更好的照片就擅自离开队伍。<br><br>一开始一切都很正常。风景很美，学生们也很活跃。本很欣赏深绿色的丛林和树上方飞过的野鸟。他给每一片灌木、杂草和遇到的奇怪植物拍照。他太专注于风景，以至于没有察觉其他人已经往前走了。<br><br>当本抬起头时，队伍已经不见了。他大声呼喊，却没有任何回应。他的心仿佛一下沉了下去。他开始怀疑自己是否走对了路。情况很糟糕，也让人害怕，但他想起了向导的建议：“不要把一个问题变成两个问题。”<br><br>本留在原地，先判断自己有什么。他的手机无法使用，但包里有水、一块亮色布和一根长绳。他把布系在树上，然后大声呼喊了三次。<br><br>很快，他听见河对岸传来声音。同组学生山姆滑倒并伤到了腿。还有两名学生和他在一起，但河水越来越深。本看见附近一棵结实的树上固定着一根救援绳，那是河边旧救援设施的一部分。<br><br>本没有贸然过河，而是让大家保持冷静。他检查绳子，发现一端松了，就把它在树上系得更紧，然后把另一端扔过河面较窄的一段。山姆的同伴把绳子固定在另一棵树上。绳子并不能变成真正的桥，但它足够结实，让大家在慢慢向更安全的地方移动时有东西可以抓住。本提醒他们不要着急，因为一个错误行动就可能增加危险。<br><br>老师们听到本的呼喊后很快赶到。山姆的腿开始肿起来，但没有严重损伤，也没有其他症状。所有人都安全返回。本后来表示，那几分钟的场面看起来非常可怕，但冷静行动降低了危险。<br><br>向导表扬了本。“勇敢并不意味着你不会害怕，”他说，“而是意味着即使害怕，你仍然有能力采取正确行动。”<br><br>本当天最重要的收获并不是完成了一次刺激的冒险，而是明白了：正确行动和尊重规则能够让团队更有力量，并帮助大家一起从困境中安全走出来。</div>
+      </details>
+    </section>
+    <section class="question-block">
+      <div class="section-kicker">B篇题目</div>
+      <h3>故事理解</h3>
+      
+    <article class="question" data-answer="0" id="q4">
+      <div class="q-head">
+        <span class="qnum">4</span>
+        <h4>Why did Ben fail to notice the group moving ahead?</h4>
+      </div>
+      <div class="options"><label class="option">
+          <input type="radio" name="q4" value="0">
+          <span class="letter">A</span><span>He was looking at the scenery.</span>
+        </label><label class="option">
+          <input type="radio" name="q4" value="1">
+          <span class="letter">B</span><span>He was checking his bag.</span>
+        </label><label class="option">
+          <input type="radio" name="q4" value="2">
+          <span class="letter">C</span><span>He was helping Sam.</span>
+        </label><label class="option">
+          <input type="radio" name="q4" value="3">
+          <span class="letter">D</span><span>He was talking with the guide.</span>
+        </label></div>
+      <div class="evidence-line">证据定位：____________________________________________</div>
+      <details class="teacher-control explain-panel">
+        <summary><span class="closed">显示答案与解析</span><span class="open">收起答案与解析</span></summary>
+        <div class="explain-body">
+          <div class="answer-badge">正确答案：A</div>
+          <div class="explain-grid">
+            <div><b>为什么选它</b><p>Ben 一直在看丛林、鸟、灌木和植物，太投入景色，所以没有注意到队伍已经向前走。</p></div>
+            <div><b>原文定位</b><p class="quote">“He was so absorbed in the scenery that he did not perceive the others moving ahead.”</p></div>
+          </div>
+          <div class="trap-box"><b>干扰项怎么错</b><ul><li>B 检查背包发生在他发现掉队之后。</li><li>C Sam 受伤发生在更后面。</li><li>D 文中没有说他当时正在和向导交谈。</li></ul></div>
+          <div class="skill-box"><b>本题训练：</b>B篇因果题：so...that... 往往直接给出“为什么”。</div>
+        </div>
+      </details>
+    </article>
+    <article class="question" data-answer="1" id="q5">
+      <div class="q-head">
+        <span class="qnum">5</span>
+        <h4>What did Ben do after he found that the group was absent?</h4>
+      </div>
+      <div class="options"><label class="option">
+          <input type="radio" name="q5" value="0">
+          <span class="letter">A</span><span>He ran quickly through the jungle.</span>
+        </label><label class="option">
+          <input type="radio" name="q5" value="1">
+          <span class="letter">B</span><span>He stayed there and checked what he had.</span>
+        </label><label class="option">
+          <input type="radio" name="q5" value="2">
+          <span class="letter">C</span><span>He crossed the river alone.</span>
+        </label><label class="option">
+          <input type="radio" name="q5" value="3">
+          <span class="letter">D</span><span>He went back to the city.</span>
+        </label></div>
+      <div class="evidence-line">证据定位：____________________________________________</div>
+      <details class="teacher-control explain-panel">
+        <summary><span class="closed">显示答案与解析</span><span class="open">收起答案与解析</span></summary>
+        <div class="explain-body">
+          <div class="answer-badge">正确答案：B</div>
+          <div class="explain-grid">
+            <div><b>为什么选它</b><p>他没有乱跑，而是留在原地，先评估自己有什么工具和资源。</p></div>
+            <div><b>原文定位</b><p class="quote">“Ben remained where he was and assessed what he had.”</p></div>
+          </div>
+          <div class="trap-box"><b>干扰项怎么错</b><ul><li>A 正是向导提醒不要做的危险行为。</li><li>C 文中明确说 Ben did not cross。</li><li>D 没有发生。</li></ul></div>
+          <div class="skill-box"><b>本题训练：</b>B篇事件顺序：抓动作链——发现掉队 → 冷静留下 → 检查物品 → 发出呼叫。</div>
+        </div>
+      </details>
+    </article>
+    <article class="question" data-answer="1" id="q6">
+      <div class="q-head">
+        <span class="qnum">6</span>
+        <h4>Why did Ben use the rope instead of crossing the river himself?</h4>
+      </div>
+      <div class="options"><label class="option">
+          <input type="radio" name="q6" value="0">
+          <span class="letter">A</span><span>He wanted to finish the activity faster.</span>
+        </label><label class="option">
+          <input type="radio" name="q6" value="1">
+          <span class="letter">B</span><span>He knew one wrong action could make the danger greater.</span>
+        </label><label class="option">
+          <input type="radio" name="q6" value="2">
+          <span class="letter">C</span><span>He did not know where Sam was.</span>
+        </label><label class="option">
+          <input type="radio" name="q6" value="3">
+          <span class="letter">D</span><span>He wanted the teachers to do everything.</span>
+        </label></div>
+      <div class="evidence-line">证据定位：____________________________________________</div>
+      <details class="teacher-control explain-panel">
+        <summary><span class="closed">显示答案与解析</span><span class="open">收起答案与解析</span></summary>
+        <div class="explain-body">
+          <div class="answer-badge">正确答案：B</div>
+          <div class="explain-grid">
+            <div><b>为什么选它</b><p>水正在变深，Ben 选择不冒险渡河，而是固定绳索帮助同学移动，并提醒一次错误行动可能增加危险。</p></div>
+            <div><b>原文定位</b><p class="quote">“Ben warned them not to rush because one wrong action could increase the threat.”</p></div>
+          </div>
+          <div class="trap-box"><b>干扰项怎么错</b><ul><li>A 与文章相反，他强调不要 rush。</li><li>C 他已经看见并听见 Sam。</li><li>D 他主动处理问题，并非等老师做全部事情。</li></ul></div>
+          <div class="skill-box"><b>本题训练：</b>B篇推断题：答案常来自“行为 + 原因”组合，而不是只找一个原词。</div>
+        </div>
+      </details>
+    </article>
+    <article class="question" data-answer="2" id="q7">
+      <div class="q-head">
+        <span class="qnum">7</span>
+        <h4>What is the main lesson of Ben’s experience?</h4>
+      </div>
+      <div class="options"><label class="option">
+          <input type="radio" name="q7" value="0">
+          <span class="letter">A</span><span>A real adventure must be spectacular.</span>
+        </label><label class="option">
+          <input type="radio" name="q7" value="1">
+          <span class="letter">B</span><span>Good pictures are worth taking risks for.</span>
+        </label><label class="option">
+          <input type="radio" name="q7" value="2">
+          <span class="letter">C</span><span>Calm action and respect for rules can help in danger.</span>
+        </label><label class="option">
+          <input type="radio" name="q7" value="3">
+          <span class="letter">D</span><span>People should never visit a forest.</span>
+        </label></div>
+      <div class="evidence-line">证据定位：____________________________________________</div>
+      <details class="teacher-control explain-panel">
+        <summary><span class="closed">显示答案与解析</span><span class="open">收起答案与解析</span></summary>
+        <div class="explain-body">
+          <div class="answer-badge">正确答案：C</div>
+          <div class="explain-grid">
+            <div><b>为什么选它</b><p>结尾直接升华主题：真正重要的不是刺激，而是冷静、正确行动和尊重规则帮助大家脱离困境。</p></div>
+            <div><b>原文定位</b><p class="quote">“...correct action and respect for rules can strengthen a group and help people survive trouble together.”</p></div>
+          </div>
+          <div class="trap-box"><b>干扰项怎么错</b><ul><li>A 把文章反着理解，作者恰恰否定“刺激才是成就”。</li><li>B 与向导的提醒相反。</li><li>D 过度绝对化，文章并没有反对森林活动。</li></ul></div>
+          <div class="skill-box"><b>本题训练：</b>B篇主旨题：重点看人物变化和最后一段，不要只复述故事表面。</div>
+        </div>
+      </details>
+    </article>
+    </section>
+    
+  
+    <section class="passage-card" id="passage-c">
+      <header class="passage-head">
+        <div><span class="passage-label">C篇 · 说明议论类 · Why Recalling Helps Memory</span><h3>说明议论类 · Why Recalling Helps Memory</h3></div>
+        <div class="passage-meta">4题｜原因、指代、方法与主旨</div>
+      </header>
+      <div class="passage-text"><div class="passage-titleline">WHY RECALLING HELPS <span class="tw" data-word="memory">MEMORY</span></div>
+<p>Many students use a <span class="tw" data-word="common">common</span> review method: reading a list again and again until every word looks <span class="tw" data-word="familiar">familiar</span>. This <span class="tw" data-word="approach">approach</span> feels easy, which is its <span class="tw" data-word="main">main</span> <span class="tw" data-word="advantage">advantage</span>. However, <span class="tw" data-word="familiar">familiar</span> is not <span class="tw" data-word="equal">equal</span> to remembered. The <span class="tw" data-word="actual">actual</span> <span class="tw" data-word="effect">effect</span> of learning can differ from the feeling of learning—an important <span class="tw" data-word="aspect">aspect</span> students often fail to notice.</p>
+<p>Imagine two students with <span class="tw" data-word="equal">equal</span> <span class="tw" data-word="ability">ability</span> studying the same 40 words for the same <span class="tw" data-word="length">length</span> of time. Student A reads the list <span class="tw" data-word="aloud">aloud</span> five times. Student B reads it once, closes the book, and tries to <span class="tw" data-word="recall">recall</span> each meaning. When Student B cannot remember, he checks the word and tries again. Both make an <span class="tw" data-word="equal">equal</span> <span class="tw" data-word="effort">effort</span> <span class="tw" data-word="altogether">altogether</span>, but their actions differ.</p>
+<p>A <span class="tw" data-word="sceptical">sceptical</span> student may <span class="tw" data-word="doubt">doubt</span> that such a small <span class="tw" data-word="change">change</span> matters and <span class="tw" data-word="expect">expect</span> a faster result. Yet the second <span class="tw" data-word="approach">approach</span> can be more <span class="tw" data-word="efficient">efficient</span> because <span class="tw" data-word="memory">memory</span> becomes stronger when the brain must search for information. Each try to <span class="tw" data-word="recall">recall</span> a word is a small exercise. This <span class="tw" data-word="active">active</span> <span class="tw" data-word="process">process</span> can <span class="tw" data-word="strengthen">strengthen</span> <span class="tw" data-word="memory">memory</span> of a word and its meaning. <span class="tw" data-word="effort">Effort</span> can <span class="tw" data-word="accumulate">accumulate</span> into real <span class="tw" data-word="progress">progress</span>. A learner may not <span class="tw" data-word="achieve">achieve</span> <span class="tw" data-word="perfect">perfect</span> <span class="tw" data-word="recall">recall</span> at once, but repeated <span class="tw" data-word="success">success</span> can help <span class="tw" data-word="accomplish">accomplish</span> the larger goal.</p>
+<p><span class="tw" data-word="active">Active</span> <span class="tw" data-word="recall">recall</span> also shows what you <span class="tw" data-word="actually">actually</span> know. Reading alone may create a wrong <span class="tw" data-word="expectation">expectation</span> of <span class="tw" data-word="knowledge">knowledge</span> because words look <span class="tw" data-word="familiar">familiar</span>. Closing the book reveals the <span class="tw" data-word="absence">absence</span> of an answer. That small problem is useful information: it highlights the <span class="tw" data-word="exact">exact</span> words that need attention and enables students to <span class="tw" data-word="assess">assess</span> their <span class="tw" data-word="knowledge">knowledge</span> more clearly.</p>
+<p>Good review also needs time. <span class="tw" data-word="knowledge">Knowledge</span> does not become <span class="tw" data-word="perfect">perfect</span> in one day. A word may be remembered today, partly forgotten tomorrow, then recalled again later. This is <span class="tw" data-word="normal">normal</span>. Each <span class="tw" data-word="successful">successful</span> <span class="tw" data-word="recall">recall</span> helps <span class="tw" data-word="memory">memory</span> <span class="tw" data-word="remain">remain</span> longer. The <span class="tw" data-word="procedure">procedure</span> may look slow, but regular practice can <span class="tw" data-word="facilitate">facilitate</span> steady <span class="tw" data-word="advance">advance</span>.</p>
+<p>No single method is <span class="tw" data-word="perfect">perfect</span> for every person or every <span class="tw" data-word="type">type</span> of word. Some students benefit from pictures; others use examples, <span class="tw" data-word="exchange">exchange</span> ideas with a <span class="tw" data-word="fellow">fellow</span> student, or use words in a <span class="tw" data-word="presentation">presentation</span>. A <span class="tw" data-word="certain">certain</span> method may have an <span class="tw" data-word="advantage">advantage</span> for one learner and a <span class="tw" data-word="disadvantage">disadvantage</span> for another. The <span class="tw" data-word="priority">priority</span> is to <span class="tw" data-word="assess">assess</span> its <span class="tw" data-word="effect">effect</span>. Students can even <span class="tw" data-word="speculate">speculate</span> which words are likely to cause <span class="tw" data-word="trouble">trouble</span> and review those first.</p>
+<p>Teachers also <span class="tw" data-word="influence">influence</span> this <span class="tw" data-word="process">process</span>. An <span class="tw" data-word="influential">influential</span> teacher does not simply give answers. Instead of punishing every wrong answer, the teacher may <span class="tw" data-word="advise">advise</span> students to explain why an answer is wrong or use a word in a new <span class="tw" data-word="scene">scene</span>. Such activities <span class="tw" data-word="add">add</span> <span class="tw" data-word="depth">depth</span> to learning and make <span class="tw" data-word="knowledge">knowledge</span> more <span class="tw" data-word="accessible">accessible</span>.</p>
+<p>The goal is not to become a “<span class="tw" data-word="perfect">perfect</span> <span class="tw" data-word="machine">machine</span>” that never forgets. It is to reduce the time needed to understand a <span class="tw" data-word="familiar">familiar</span> word when you <span class="tw" data-word="encounter">encounter</span> it again. As this <span class="tw" data-word="process">process</span> becomes quicker, reading becomes smoother and students can focus on the <span class="tw" data-word="main">main</span> idea and how the ideas fit <span class="tw" data-word="together">together</span>. Small regular efforts may not look <span class="tw" data-word="spectacular">spectacular</span>, but they can have a <span class="tw" data-word="broad">broad</span> <span class="tw" data-word="impact">impact</span> on a confident attitude, <span class="tw" data-word="ambition">ambition</span> and the <span class="tw" data-word="prospect">prospect</span> of <span class="tw" data-word="success">success</span>. Students who become <span class="tw" data-word="capable">capable</span> of quick <span class="tw" data-word="recall">recall</span> can <span class="tw" data-word="certainly">certainly</span> be more confident when they read and are more likely to <span class="tw" data-word="succeed">succeed</span>.</p></div>
+      <div class="feedback-strip teacher-control">
+        <span>本篇自然复现 U1 原词 <b>69</b> 个</span>
+        <span>讲解时建议先让学生说：“哪些词我真的用上了？”</span>
+      </div>
+      <details class="teacher-control passage-translation">
+        <summary><span class="closed">显示全文翻译</span><span class="open">收起全文翻译</span></summary>
+        <div class="translation-cn">为什么主动回忆有助于记忆<br><br>很多学生复习英语单词时会使用一种常见方法：一遍又一遍地读单词表，直到每个词看起来都很熟悉。这种方法感觉很轻松，这是它的主要优势。然而，“看起来熟悉”并不等于“真正记住”。学习的实际效果可能和学习时的感觉不同——这是学生经常忽视的一个重要方面。<br><br>设想两名能力相当的学生，用相同时间学习同样的40个单词。学生A把单词表大声读五遍。学生B读一遍后合上书，然后尝试回忆每个词的意思。只要想不起来，他就检查一下，再尝试一次。两个人总投入的努力相同，但采取的行动不同。<br><br>一个持怀疑态度的学生可能会怀疑这么小的改变有没有用，并期待更快的结果。但第二种方法可能更高效，因为当大脑必须主动寻找信息时，记忆会变得更强。每一次尝试回忆一个单词，都像一次小练习。这种积极的过程能够加强对单词及其含义的记忆。努力会逐渐积累成真正的进步。学习者不一定马上达到完美回忆，但一次次成功可以帮助完成更大的目标。<br><br>主动回忆还能显示你真正掌握了什么。只阅读可能会产生错误的“我已经会了”的预期，因为这些词看起来很熟悉。合上书后，想不出答案的问题就会暴露出来。这个小问题其实是有用的信息：它会突出真正需要注意的单词，并让学生更清楚地评估自己的知识掌握情况。<br><br>好的复习还需要时间。知识通常不会在一天内变得完美。一个词今天可能记得，明天忘掉一部分，之后又再次想起来，这是正常的。每一次成功回忆都能帮助记忆保持更长时间。这个过程看起来可能比较慢，但规律练习能够促进稳定进步。<br><br>没有一种方法对所有人、所有类型的单词都是完美的。有些学生从图片中受益，有些人喜欢看例句、和同学交换想法，或者把新词用于简短展示。某一种方法对一个学习者可能有优势，对另一个人却可能有劣势。最优先考虑的是评估方法的效果，而不是它感觉起来有多舒服。学生甚至可以推测哪些词最容易带来麻烦，然后先复习这些词。<br><br>老师也会影响这个过程。有影响力的老师不会只是直接给答案。与其因为每个错误答案而处罚学生，老师更可以建议学生解释答案为什么错，或者把单词放进新的场景里使用。这些活动会增加学习深度，让知识在不同情况下更容易被调用。<br><br>目标并不是变成一台永远不会遗忘的“完美机器”，而是当你再次遇到熟悉单词时，缩短理解它所需要的时间。随着这个过程越来越快，阅读会越来越顺，学生也能把更多注意力放到文章大意以及不同观点如何联系起来。小而规律的努力看起来也许并不惊人，但长期下来，它们会对自信的学习态度、志向和成功前景产生广泛影响。能够快速回忆的学生，在阅读时往往会更加自信，也更容易取得进步。</div>
+      </details>
+    </section>
+    <section class="question-block">
+      <div class="section-kicker">C篇题目</div>
+      <h3>说明·议论理解</h3>
+      
+    <article class="question" data-answer="0" id="q8">
+      <div class="q-head">
+        <span class="qnum">8</span>
+        <h4>Why may reading the same word list many times give students a wrong expectation?</h4>
+      </div>
+      <div class="options"><label class="option">
+          <input type="radio" name="q8" value="0">
+          <span class="letter">A</span><span>The words look familiar, so students may think they remember them.</span>
+        </label><label class="option">
+          <input type="radio" name="q8" value="1">
+          <span class="letter">B</span><span>The list usually contains too many pictures.</span>
+        </label><label class="option">
+          <input type="radio" name="q8" value="2">
+          <span class="letter">C</span><span>Students always spend too little time reading.</span>
+        </label><label class="option">
+          <input type="radio" name="q8" value="3">
+          <span class="letter">D</span><span>The words become different after each reading.</span>
+        </label></div>
+      <div class="evidence-line">证据定位：____________________________________________</div>
+      <details class="teacher-control explain-panel">
+        <summary><span class="closed">显示答案与解析</span><span class="open">收起答案与解析</span></summary>
+        <div class="explain-body">
+          <div class="answer-badge">正确答案：A</div>
+          <div class="explain-grid">
+            <div><b>为什么选它</b><p>文章指出“看起来熟悉”不等于“真正能回忆”，反复看会让学生误以为自己已经掌握。</p></div>
+            <div><b>原文定位</b><p class="quote">“Reading alone may create a wrong expectation of knowledge because words look familiar.”</p></div>
+          </div>
+          <div class="trap-box"><b>干扰项怎么错</b><ul><li>B 文中没有讨论图片数量。</li><li>C 问题不是时间一定太少，而是学习方式造成熟悉感错觉。</li><li>D 单词本身不会改变。</li></ul></div>
+          <div class="skill-box"><b>本题训练：</b>C篇解释题：抓 because 后面的原因，并区分 familiar 与 remembered。</div>
+        </div>
+      </details>
+    </article>
+    <article class="question" data-answer="1" id="q9">
+      <div class="q-head">
+        <span class="qnum">9</span>
+        <h4>What does “That small problem” refer to?</h4>
+      </div>
+      <div class="options"><label class="option">
+          <input type="radio" name="q9" value="0">
+          <span class="letter">A</span><span>Having no book to read.</span>
+        </label><label class="option">
+          <input type="radio" name="q9" value="1">
+          <span class="letter">B</span><span>Being unable to recall an answer after closing the book.</span>
+        </label><label class="option">
+          <input type="radio" name="q9" value="2">
+          <span class="letter">C</span><span>Reading a word too quickly.</span>
+        </label><label class="option">
+          <input type="radio" name="q9" value="3">
+          <span class="letter">D</span><span>Using pictures to study words.</span>
+        </label></div>
+      <div class="evidence-line">证据定位：____________________________________________</div>
+      <details class="teacher-control explain-panel">
+        <summary><span class="closed">显示答案与解析</span><span class="open">收起答案与解析</span></summary>
+        <div class="explain-body">
+          <div class="answer-badge">正确答案：B</div>
+          <div class="explain-grid">
+            <div><b>为什么选它</b><p>前一句说合上书以后，答案想不起来的“缺失”会变得明显，因此 That small problem 指的就是无法主动回忆。</p></div>
+            <div><b>原文定位</b><p class="quote">“Closing the book reveals the absence of an answer. That small problem...”</p></div>
+          </div>
+          <div class="trap-box"><b>干扰项怎么错</b><ul><li>A 不是没有书，而是合上书主动回忆。</li><li>C 文中没说速度导致这个问题。</li><li>D 图片只是另一种可能的方法，不是这里的指代对象。</li></ul></div>
+          <div class="skill-box"><b>本题训练：</b>C篇指代题：往前找最近的完整意思，不要只盯着一个名词。</div>
+        </div>
+      </details>
+    </article>
+    <article class="question" data-answer="1" id="q10">
+      <div class="q-head">
+        <span class="qnum">10</span>
+        <h4>Which action best shows active recall?</h4>
+      </div>
+      <div class="options"><label class="option">
+          <input type="radio" name="q10" value="0">
+          <span class="letter">A</span><span>Reading the same list five times without stopping.</span>
+        </label><label class="option">
+          <input type="radio" name="q10" value="1">
+          <span class="letter">B</span><span>Closing the book and trying to remember each meaning.</span>
+        </label><label class="option">
+          <input type="radio" name="q10" value="2">
+          <span class="letter">C</span><span>Waiting until the day before an exam.</span>
+        </label><label class="option">
+          <input type="radio" name="q10" value="3">
+          <span class="letter">D</span><span>Only reading words that already look familiar.</span>
+        </label></div>
+      <div class="evidence-line">证据定位：____________________________________________</div>
+      <details class="teacher-control explain-panel">
+        <summary><span class="closed">显示答案与解析</span><span class="open">收起答案与解析</span></summary>
+        <div class="explain-body">
+          <div class="answer-badge">正确答案：B</div>
+          <div class="explain-grid">
+            <div><b>为什么选它</b><p>主动回忆的核心是先把答案遮住，让大脑自己找，再检查。</p></div>
+            <div><b>原文定位</b><p class="quote">“Student B reads it once, closes the book, and tries to recall each meaning.”</p></div>
+          </div>
+          <div class="trap-box"><b>干扰项怎么错</b><ul><li>A 是被文章拿来对比的重复阅读。</li><li>C 与规律复习相反。</li><li>D 会避开真正薄弱的词。</li></ul></div>
+          <div class="skill-box"><b>本题训练：</b>C篇概念理解：先找到作者给出的具体例子，再反推概念。</div>
+        </div>
+      </details>
+    </article>
+    <article class="question" data-answer="0" id="q11">
+      <div class="q-head">
+        <span class="qnum">11</span>
+        <h4>What is the main purpose of the passage?</h4>
+      </div>
+      <div class="options"><label class="option">
+          <input type="radio" name="q11" value="0">
+          <span class="letter">A</span><span>To explain why active recall can help memory and reading.</span>
+        </label><label class="option">
+          <input type="radio" name="q11" value="1">
+          <span class="letter">B</span><span>To show that every student must use one perfect method.</span>
+        </label><label class="option">
+          <input type="radio" name="q11" value="2">
+          <span class="letter">C</span><span>To advise students to stop learning new words.</span>
+        </label><label class="option">
+          <input type="radio" name="q11" value="3">
+          <span class="letter">D</span><span>To compare two school subjects.</span>
+        </label></div>
+      <div class="evidence-line">证据定位：____________________________________________</div>
+      <details class="teacher-control explain-panel">
+        <summary><span class="closed">显示答案与解析</span><span class="open">收起答案与解析</span></summary>
+        <div class="explain-body">
+          <div class="answer-badge">正确答案：A</div>
+          <div class="explain-grid">
+            <div><b>为什么选它</b><p>全文围绕“主动回忆为什么有效、怎样暴露薄弱点、如何帮助长期记忆和阅读”展开。</p></div>
+            <div><b>原文定位</b><p class="quote">The passage moves from “familiar is not equal to remembered” to the effect of recall on memory and reading.</p></div>
+          </div>
+          <div class="trap-box"><b>干扰项怎么错</b><ul><li>B 文中明确说 no single method is perfect for every person。</li><li>C 完全相反，文章支持继续学习和复习。</li><li>D 没有比较学科。</li></ul></div>
+          <div class="skill-box"><b>本题训练：</b>C篇写作目的：把每段功能串起来，找贯穿全文的中心，而不是抓某个细节。</div>
+        </div>
+      </details>
+    </article>
+    </section>
+    
+
+  <section class="translation-task" id="translation">
+    <div class="section-kicker">句子语感训练</div>
+    <h3>重点句英译中 · 10题</h3>
+    <p class="instruction">先不要逐词写中文。建议顺序：第一眼说大意 → 找主干 → 划意群 → 自然表达。讲解模式下可逐句展开翻译流程。</p>
+    
+    <article class="translation-item" id="t1">
+      <div class="t-index">01</div>
+      <div class="t-main">
+        <p class="eng">A school <span class="tw" data-word="representative">representative</span> will record the <span class="tw" data-word="activity">activity</span> for a later <span class="tw" data-word="broadcast">broadcast</span>.</p>
+        <div class="answer-lines"><i></i><i></i></div>
+        <details class="teacher-control explain-panel translation-explain">
+          <summary><span class="closed">显示翻译流程</span><span class="open">收起翻译流程</span></summary>
+          <div class="explain-body">
+            <div class="flow-grid">
+              <div><b>① 第一眼抓主干</b><p>A school representative will record the activity</p></div>
+              <div><b>② 按意群切开</b><p>A school representative / will record the activity / for a later broadcast</p></div>
+              <div><b>③ 简单语法点</b><p>will + 动词原形表示将来；for a later broadcast 表示“为了之后的播出”。</p></div>
+              <div><b>④ 自然中文</b><p>学校的一名代表会把这次活动录下来，供之后播出。</p></div>
+            </div>
+            <div class="sense-tip"><b>语感目标：</b>第一眼只抓“谁—做什么—为了什么”：代表 → 录活动 → 以后播出。</div>
+          </div>
+        </details>
+      </div>
+    </article>
+    <article class="translation-item" id="t2">
+      <div class="t-index">02</div>
+      <div class="t-main">
+        <p class="eng">The <span class="tw" data-word="main">main</span> aim is to help students <span class="tw" data-word="remain">remain</span> calm and take correct <span class="tw" data-word="action">action</span> instead of trying to <span class="tw" data-word="fight">fight</span> the water.</p>
+        <div class="answer-lines"><i></i><i></i></div>
+        <details class="teacher-control explain-panel translation-explain">
+          <summary><span class="closed">显示翻译流程</span><span class="open">收起翻译流程</span></summary>
+          <div class="explain-body">
+            <div class="flow-grid">
+              <div><b>① 第一眼抓主干</b><p>The main aim is to help students...</p></div>
+              <div><b>② 按意群切开</b><p>The main aim / is to help students remain calm / and take correct action / instead of trying to fight the water</p></div>
+              <div><b>③ 简单语法点</b><p>help sb do sth；instead of doing 表示“而不是做……”。</p></div>
+              <div><b>④ 自然中文</b><p>主要目标是帮助学生保持冷静并采取正确行动，而不是试图和水硬抗。</p></div>
+            </div>
+            <div class="sense-tip"><b>语感目标：</b>看到 instead of，立刻感受“应该做什么 vs 不应该做什么”的对比。</div>
+          </div>
+        </details>
+      </div>
+    </article>
+    <article class="translation-item" id="t3">
+      <div class="t-index">03</div>
+      <div class="t-main">
+        <p class="eng">He was so absorbed in the <span class="tw" data-word="scenery">scenery</span> that he did not <span class="tw" data-word="perceive">perceive</span> the others moving ahead.</p>
+        <div class="answer-lines"><i></i><i></i></div>
+        <details class="teacher-control explain-panel translation-explain">
+          <summary><span class="closed">显示翻译流程</span><span class="open">收起翻译流程</span></summary>
+          <div class="explain-body">
+            <div class="flow-grid">
+              <div><b>① 第一眼抓主干</b><p>He was so absorbed ... that he did not perceive...</p></div>
+              <div><b>② 按意群切开</b><p>He was so absorbed in the scenery / that / he did not perceive / the others moving ahead</p></div>
+              <div><b>③ 简单语法点</b><p>so...that... 表示“如此……以至于……”；perceive sb doing 表示察觉某人正在做某事。</p></div>
+              <div><b>④ 自然中文</b><p>他太专注于眼前的风景，以至于没有察觉其他人已经向前走了。</p></div>
+            </div>
+            <div class="sense-tip"><b>语感目标：</b>直接抓因果：太专注看风景 → 没注意队伍走远。</div>
+          </div>
+        </details>
+      </div>
+    </article>
+    <article class="translation-item" id="t4">
+      <div class="t-index">04</div>
+      <div class="t-main">
+        <p class="eng">The situation was <span class="tw" data-word="terrible">terrible</span> and frightening, but he recalled the guide’s <span class="tw" data-word="advice">advice</span>.</p>
+        <div class="answer-lines"><i></i><i></i></div>
+        <details class="teacher-control explain-panel translation-explain">
+          <summary><span class="closed">显示翻译流程</span><span class="open">收起翻译流程</span></summary>
+          <div class="explain-body">
+            <div class="flow-grid">
+              <div><b>① 第一眼抓主干</b><p>The situation was terrible and frightening, but he recalled...</p></div>
+              <div><b>② 按意群切开</b><p>The situation was terrible and frightening / but / he recalled the guide’s advice</p></div>
+              <div><b>③ 简单语法点</b><p>but 后面发生转折，阅读时真正推动故事发展的信息通常在 but 后。</p></div>
+              <div><b>④ 自然中文</b><p>当时的情况很糟糕，也让人害怕，但他想起了向导的建议。</p></div>
+            </div>
+            <div class="sense-tip"><b>语感目标：</b>不是逐词翻译，而是抓“害怕 → 但是想起建议”的转折。</div>
+          </div>
+        </details>
+      </div>
+    </article>
+    <article class="translation-item" id="t5">
+      <div class="t-index">05</div>
+      <div class="t-main">
+        <p class="eng">The <span class="tw" data-word="rope">rope</span> was not a bridge, but its <span class="tw" data-word="strength">strength</span> gave them something strong to hold while they moved to safer ground.</p>
+        <div class="answer-lines"><i></i><i></i></div>
+        <details class="teacher-control explain-panel translation-explain">
+          <summary><span class="closed">显示翻译流程</span><span class="open">收起翻译流程</span></summary>
+          <div class="explain-body">
+            <div class="flow-grid">
+              <div><b>① 第一眼抓主干</b><p>The rope was not a bridge, but its strength gave them something...</p></div>
+              <div><b>② 按意群切开</b><p>The rope was not a bridge / but its strength gave them something strong to hold / while they moved to safer ground</p></div>
+              <div><b>③ 简单语法点</b><p>something + 形容词 + to do；while 表示“当……的时候”。</p></div>
+              <div><b>④ 自然中文</b><p>这根绳子并不是一座桥，但它足够结实，让他们在向更安全的地方移动时有东西可以抓住。</p></div>
+            </div>
+            <div class="sense-tip"><b>语感目标：</b>先形成画面：绳子不能当桥，却能提供支撑。</div>
+          </div>
+        </details>
+      </div>
+    </article>
+    <article class="translation-item" id="t6">
+      <div class="t-index">06</div>
+      <div class="t-main">
+        <p class="eng">Being brave does not mean you are not afraid. It means you still have the <span class="tw" data-word="ability">ability</span> to <span class="tw" data-word="act">act</span> well.</p>
+        <div class="answer-lines"><i></i><i></i></div>
+        <details class="teacher-control explain-panel translation-explain">
+          <summary><span class="closed">显示翻译流程</span><span class="open">收起翻译流程</span></summary>
+          <div class="explain-body">
+            <div class="flow-grid">
+              <div><b>① 第一眼抓主干</b><p>Being brave does not mean... It means...</p></div>
+              <div><b>② 按意群切开</b><p>Being brave / does not mean / you are not afraid // It means / you still have the ability / to act well</p></div>
+              <div><b>③ 简单语法点</b><p>动名词 Being brave 作主语；does not mean... / It means... 用来纠正一种错误理解。</p></div>
+              <div><b>④ 自然中文</b><p>勇敢并不意味着你不会害怕，而是意味着即使害怕，你仍然有能力采取正确行动。</p></div>
+            </div>
+            <div class="sense-tip"><b>语感目标：</b>核心不是“无所畏惧”，而是“害怕时仍然做对的事”。</div>
+          </div>
+        </details>
+      </div>
+    </article>
+    <article class="translation-item" id="t7">
+      <div class="t-index">07</div>
+      <div class="t-main">
+        <p class="eng">However, <span class="tw" data-word="familiar">familiar</span> is not <span class="tw" data-word="equal">equal</span> to remembered.</p>
+        <div class="answer-lines"><i></i><i></i></div>
+        <details class="teacher-control explain-panel translation-explain">
+          <summary><span class="closed">显示翻译流程</span><span class="open">收起翻译流程</span></summary>
+          <div class="explain-body">
+            <div class="flow-grid">
+              <div><b>① 第一眼抓主干</b><p>familiar is not equal to remembered</p></div>
+              <div><b>② 按意群切开</b><p>However / familiar / is not equal to / remembered</p></div>
+              <div><b>③ 简单语法点</b><p>however 表转折；be equal to 表示“等同于”。这里把 familiar 和 remembered 当成两种状态比较。</p></div>
+              <div><b>④ 自然中文</b><p>然而，看起来熟悉并不等于真正记住了。</p></div>
+            </div>
+            <div class="sense-tip"><b>语感目标：</b>一句话抓住全文核心：熟悉感 ≠ 真正记忆。</div>
+          </div>
+        </details>
+      </div>
+    </article>
+    <article class="translation-item" id="t8">
+      <div class="t-index">08</div>
+      <div class="t-main">
+        <p class="eng">That small problem is useful information: it highlights the <span class="tw" data-word="exact">exact</span> words that need attention and enables students to <span class="tw" data-word="assess">assess</span> their <span class="tw" data-word="knowledge">knowledge</span> more clearly.</p>
+        <div class="answer-lines"><i></i><i></i></div>
+        <details class="teacher-control explain-panel translation-explain">
+          <summary><span class="closed">显示翻译流程</span><span class="open">收起翻译流程</span></summary>
+          <div class="explain-body">
+            <div class="flow-grid">
+              <div><b>① 第一眼抓主干</b><p>That small problem is useful information; it highlights... and enables...</p></div>
+              <div><b>② 按意群切开</b><p>That small problem / is useful information / it highlights the exact words that need attention / and enables students to assess their knowledge more clearly</p></div>
+              <div><b>③ 简单语法点</b><p>that need attention 是定语从句修饰 words；enable sb to do sth 表示“使某人能够做……”。</p></div>
+              <div><b>④ 自然中文</b><p>这个小问题其实是有用的信息：它能突出那些真正需要注意的单词，也能让学生更清楚地评估自己的掌握情况。</p></div>
+            </div>
+            <div class="sense-tip"><b>语感目标：</b>先抓两个作用：找出薄弱词 + 看清真实掌握程度。</div>
+          </div>
+        </details>
+      </div>
+    </article>
+    <article class="translation-item" id="t9">
+      <div class="t-index">09</div>
+      <div class="t-main">
+        <p class="eng">A <span class="tw" data-word="certain">certain</span> method may have an <span class="tw" data-word="advantage">advantage</span> for one learner and a <span class="tw" data-word="disadvantage">disadvantage</span> for another.</p>
+        <div class="answer-lines"><i></i><i></i></div>
+        <details class="teacher-control explain-panel translation-explain">
+          <summary><span class="closed">显示翻译流程</span><span class="open">收起翻译流程</span></summary>
+          <div class="explain-body">
+            <div class="flow-grid">
+              <div><b>① 第一眼抓主干</b><p>A certain method may have an advantage ... and a disadvantage...</p></div>
+              <div><b>② 按意群切开</b><p>A certain method / may have an advantage for one learner / and a disadvantage for another</p></div>
+              <div><b>③ 简单语法点</b><p>one...another... 表示“一个……另一个……”；advantage 与 disadvantage 构成对比。</p></div>
+              <div><b>④ 自然中文</b><p>某一种方法对一个学习者来说可能有优势，但对另一个学习者来说可能有劣势。</p></div>
+            </div>
+            <div class="sense-tip"><b>语感目标：</b>直接感受“同一种方法，对不同的人效果不同”。</div>
+          </div>
+        </details>
+      </div>
+    </article>
+    <article class="translation-item" id="t10">
+      <div class="t-index">10</div>
+      <div class="t-main">
+        <p class="eng">The goal is not to become a “<span class="tw" data-word="perfect">perfect</span> <span class="tw" data-word="machine">machine</span>” that never forgets. It is to reduce the time needed to understand a <span class="tw" data-word="familiar">familiar</span> word when you <span class="tw" data-word="encounter">encounter</span> it again.</p>
+        <div class="answer-lines"><i></i><i></i></div>
+        <details class="teacher-control explain-panel translation-explain">
+          <summary><span class="closed">显示翻译流程</span><span class="open">收起翻译流程</span></summary>
+          <div class="explain-body">
+            <div class="flow-grid">
+              <div><b>① 第一眼抓主干</b><p>The goal is not to become... It is to reduce the time...</p></div>
+              <div><b>② 按意群切开</b><p>The goal / is not to become a “perfect machine” that never forgets // It is to reduce the time / needed to understand a familiar word / when you encounter it again</p></div>
+              <div><b>③ 简单语法点</b><p>that never forgets 修饰 machine；needed to understand... 是过去分词短语修饰 time；when 引导时间状语。</p></div>
+              <div><b>④ 自然中文</b><p>目标并不是变成一台永远不会遗忘的“完美机器”，而是当你再次遇到一个熟悉单词时，缩短理解它所需要的时间。</p></div>
+            </div>
+            <div class="sense-tip"><b>语感目标：</b>真正目标：不是永不忘，而是下次见到时反应更快。</div>
+          </div>
+        </details>
+      </div>
+    </article>
+  </section>
+
+  <section class="summary-card" id="diagnosis">
+    <div class="section-kicker">课后诊断</div>
+    <h3>不是只记“错了几题”，而是判断为什么错</h3>
+    <div class="diagnosis-grid">
+      <label>词汇识别卡顿<input type="text" placeholder="词 / 题号"></label>
+      <label>句子结构卡顿<input type="text" placeholder="句号 / 题号"></label>
+      <label>原文定位错误<input type="text" placeholder="题号"></label>
+      <label>逻辑 / 推断错误<input type="text" placeholder="题号"></label>
+      <label class="wide">下一次只改进 1—2 个重点<input type="text" placeholder="例：看到 but 后先抓转折；A篇先看题干再定位"></label>
+    </div>
+  </section>
+
+  <section class="summary-card teacher-control">
+    <h3>本套词汇设计说明</h3>
+    <p>本套文章以“小学基础词 + 中考核心高频688词 + U1 L1—L4 309词”为限定范围。三篇阅读中按 <b>U1原形词逐词保守统计</b>，自然复现 <b>186个不同U1词</b>，覆盖率约 <b>60.2%</b>；词形变化不额外计入覆盖率。</p>
+    <p>设计上没有为了覆盖率硬塞所有生僻词，而是把U1词分散到应用文场景、故事情境和学习方法说明中，让同一词汇承担真实理解功能。</p>
+  </section>
+
+  <div class="footer-note">本材料用于初高中衔接网课｜默认答案全部收起｜建议先做题，再打开词汇标注与解析</div>
+</main>
+
+<div class="score-box" id="scoreBox"></div>
+<script>
+const WORD_HELP={"act": "n.行动, 行为 v.行动", "action": "n.行为, 行动; 功能, 作用", "active": "adj.积极的", "activity": "n.活动; 活性, 活力", "actor": "n.(男)演员", "actress": "n.女演员", "actual": "adj.实际的, 真正的", "actually": "adv.的确, 真实地; 实际上", "add": "v.增加; 补充说", "adequate": "adj.充分的, 足够的; 胜任的", "admire": "v.赞美, 赞赏; 钦佩", "advance": "n.进步 v.进步", "advantage": "n.优势, 有利因素; 优点", "adventure": "n.冒险; 冒险经历", "advertise": "v.(为……)做广告; 登广告", "advertisement": "n.广告", "advice": "n.劝告, 建议", "advise": "v.劝告, 建议", "alive": "adj.活的, 活着的", "aloud": "adv.出声地; 大声地", "aspect": "n.方面; 外貌", "audience": "n.听众; 观众", "brush": "n.刷子, 毛刷; 画笔", "bush": "n.灌木, 灌木丛", "certain": "adj.确定的; 某种, 某些", "certainly": "adv.无疑, 确定, 肯定; 当然", "check": "v.检查 n.支票; 检查", "disadvantage": "n.劣势, 不利因素; 缺点", "doubt": "n.怀疑, 疑问 v.怀疑", "equal": "adj.相同的; 平等的", "exact": "adj.准确的, 精确的", "expect": "v.预料; 期望; 料想", "expectation": "n.预料, 预期, 期待; 希望", "inspect": "v.调查; 检查; 视察", "inspection": "n.视察; 检查, 查看, 审视", "jungle": "n.丛林, 密林", "live": "v.生活 adj.现场(直播)的", "lively": "adj.充满趣味的; 活跃的", "living": "adj.活(着)的 n.生活", "loudspeaker": "n.扬声器, 喇叭", "prospect": "n.前途; 预期", "publish": "v.出版, 发行; 公布; 发表", "react": "v.回应, 做出反应", "reaction": "n.反应, 回应; 反作用", "respect": "n.尊重 v.尊重", "sceptical": "adj.怀疑的; 不相信的", "spectacular": "adj.壮观的, 惊人的", "spectator": "n.观众", "speculate": "v.推测, 推断; 投机", "surface": "n.表面; 外表", "survival": "n.幸存, 生存; 残存物", "survive": "v.幸免于, 幸存, 生还", "venture": "n.冒险行为 v.冒险", "virtual": "adj.事实上的; 虚拟的", "vivid": "adj.生动的; 鲜艳的", "weed": "n.杂草", "wipe": "v.擦, 揩, 擦去", "abandon": "v.遗弃, 抛弃; 放弃", "ability": "n.能力, 本领; 才能; 才干", "able": "adj.有能力的, 能干的", "abnormal": "adj.不正常的; 反常的", "absence": "n.缺席", "absent": "adj.缺席的; 不存在的 n.滥用; 虐待; 辱骂 v.滥用; 虐 84 abuse 待; 辱骂", "behave": "v.表现; 表现得体", "capable": "adj.有能力的; 能胜任的", "captain": "n.首领; 队长; 机长", "caption": "n.说明文字, 字幕", "change": "v.改变; 兑换 n.改变", "escape": "v.逃脱 n.逃, 逃亡 n.交换; 互换; 兑换 v.交换; 互 102 exchange 换; 兑换", "exchange": "n.交换; 互换; 兑换 v.交换; 互换; 兑换", "fellow": "n.同事 adj.同事的", "follow": "v.跟随; 沿……而行; 遵循", "gift": "n.礼物; 天赋, 才能", "main": "adj.主要的; 最重要的", "maintain": "v.维持; 维修; 坚持认为", "normal": "adj.典型的; 正常的", "presentation": "n.演示, 演出; 颁奖仪式", "remain": "v.保持; 剩余; 逗留", "represent": "v.代表, 象征; 描绘, 展示", "representative": "n.代表 adj.典型的", "spray": "n.浪花, 水花 v.喷, 溅散", "standard": "n.标准, 规格 adj.标准的", "style": "n.风格, 文体; 式样, 类型", "sustainability": "n.持续性", "swell": "v.肿胀, 隆起", "switch": "n.开关; 转换 v.转换", "symbol": "n.符号, 标志, 象征", "symptom": "n.征兆; 特征; 症状", "type": "n.类型 v.打字", "aboard": "adv.在(船等)上 prep.在(船等)上", "absorb": "v.吸收; 使全神贯注", "accept": "v.接受; 收下; 承认", "access": "v.接近; 进入 n.机会", "accessible": "adj.可接近的; 可使用的", "accomplish": "v.完成, 达到, 实现", "achieve": "v.达到; 完成", "achievement": "n.成就; 功绩; 达到", "approach": "v.走近 n.方法, 途径", "assess": "v.评估; 估价", "blackboard": "n.黑板", "board": "n.木板 v.上(船、飞机等)", "broad": "adj.宽的; 辽阔的; 广泛的", "broadcast": "v.播送 n.广播节目", "button": "n.纽扣, 按钮 v.扣住", "cast": "v.投射 n.全体演员; 投", "castle": "n.城堡", "concept": "n.概念; 观念", "deep": "adj.深的 adv.深深地", "depth": "n.深, 深度", "enlarge": "v.扩大; 扩充; 放大", "fasten": "v.系紧, 扎牢, 扣住", "fight": "n.打架 v.打仗; 对抗", "highlight": "v.突出; 强调", "horrible": "adj.可怕的, 令人恐惧的", "length": "n.长, 长度; 一段, 一截", "loose": "v.松开 adj.未固定牢的", "palace": "n.宫, 宫殿", "perceive": "v.注意到, 察觉", "receipt": "n.发票, 收据; 收入", "receive": "v.收到, 接收", "receptionist": "n.接待员", "strength": "n.力量, 实力; 强度; 优点", "strengthen": "v.加强, 巩固", "succeed": "v.达到目的; 成功", "success": "n.成功; 胜利", "successful": "adj.获得成功的", "terrible": "adj.可怕的; 极坏的; 糟透的", "threat": "n.恐吓, 威胁; 凶兆", "tight": "adj.牢固的 adv.牢固地", "weight": "n.重量; 重物; 重担", "wide": "adj.宽的, 广阔的, 广泛的", "wild": "adj.野生的 n.偏远地区", "accumulate": "v.积累; 积聚", "affect": "v.影响; 侵袭; 感染", "altogether": "adv.完全地; 总共; 总之", "ambition": "n.野心; 志向, 抱负", "ancestor": "n.祖先, 祖宗; 原型", "ancient": "adj.古代的; 古老的", "ascend": "v.升高, 上升; 攀登, 登上", "belt": "n.带子; 腰带; 皮带", "calculate": "v.计算; 估计, 推测", "calendar": "n.日历, 历书; 历法", "chain": "n.链(条) v.用链条拴住", "common": "adj.通常的; 普通的", "count": "v.数数 n.点数; 数量", "countdown": "n.倒计时; 倒数读秒", "counter": "n.柜台; 计算器 v.反驳", "descend": "v.下来, 下降", "discount": "n.折扣 v.打折扣", "effect": "n.效果, 影响", "efficient": "adj.效率高的; 有功效的", "effort": "n.努力, 成果", "encounter": "v.遭遇; 遇见 n.遭遇; 遇见", "facilitate": "v.促进; 促使", "facility": "n.设施; 设备; 天赋; 才能", "familiar": "adj.熟悉的, 通晓的", "gallery": "n.美术馆, 画廊", "gather": "v.聚集, 聚拢; 收集", "impact": "n.碰撞 v.影响", "influence": "n.影响; 势力 v.影响", "influential": "adj.有很大影响的", "knowledge": "n.知识, 学问; 认识, 知道", "lab": "n.实验室", "landscape": "n.风景, 景色; 风景画", "machine": "n.机器", "memorial": "n.纪念馆; 纪念碑; 纪念物", "memory": "n.回忆, 记忆", "monument": "n.纪念碑; 历史遗迹", "natural": "adj.自然的; 天生的", "nature": "n.自然界; 本性, 天性", "perfect": "adj.完美的 v.使完美", "priority": "n.优先, 优先权", "procedure": "n.程序, 步骤", "process": "n.过程 v.加工", "progress": "n.进步; 进展 v.进步", "recall": "v.记起; 召回, 收回", "remind": "v.提醒, 使想起", "rope": "n.绳子 v.用绳子捆绑", "scene": "n.景色; 现场", "scenery": "n.风景, 景色; 舞台布景", "strange": "adj.陌生的; 奇怪的", "strap": "n.皮带 v.用皮带捆绑", "string": "n.线, 细绳; 一串, 一行", "together": "adv.一起, 共同", "trouble": "n.困难, 麻烦, 困境", "usual": "adj.平常的, 惯例的"};
+let teacher=false, targetShown=false, running=false, sec=0, tick=null, scale=1;
+
+function toggleTeacherMode(){
+  teacher=!teacher;
+  document.body.classList.toggle('teacher-mode',teacher);
+  document.getElementById('teacherBtn').textContent=teacher?'退出讲解模式':'进入讲解模式';
+  if(!teacher) collapseAll();
+}
+function toggleTargets(){
+  targetShown=!targetShown;
+  document.body.classList.toggle('show-target',targetShown);
+}
+function expandAll(){
+  document.querySelectorAll('details.teacher-control').forEach(d=>d.open=true);
+}
+function collapseAll(){
+  document.querySelectorAll('details.teacher-control').forEach(d=>d.open=false);
+}
+function fontScale(d){
+  scale=Math.max(.85,Math.min(1.3,scale+d));
+  document.documentElement.style.setProperty('--font-scale',scale);
+}
+function toggleTimer(){
+  running=!running;
+  if(running){
+    tick=setInterval(()=>{
+      sec++;
+      document.getElementById('timer').textContent=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
+    },1000);
+  }else clearInterval(tick);
+}
+function gradeAll(){
+  let total=0,correct=0;
+  document.querySelectorAll('.question').forEach(q=>{
+    total++;
+    const ans=Number(q.dataset.answer);
+    const checked=q.querySelector('input:checked');
+    q.querySelectorAll('.option').forEach((lab,i)=>{
+      lab.classList.remove('correct-choice','wrong-choice');
+      if(i===ans) lab.classList.add('correct-choice');
+    });
+    if(checked){
+      const val=Number(checked.value);
+      if(val===ans) correct++;
+      else checked.closest('.option').classList.add('wrong-choice');
+    }
+  });
+  const box=document.getElementById('scoreBox');
+  box.innerHTML=`阅读选择题：<b>${correct} / ${total}</b><br><small>绿色=正确项；红色=误选项。批改后仍建议要求学生指出原文证据。</small>`;
+  box.style.display='block';
+  setTimeout(()=>box.style.display='none',6500);
+}
+function printMode(mode){
+  document.body.classList.remove('student-print','teacher-print');
+  document.body.classList.add(mode+'-print');
+  if(mode==='teacher'){teacher=true;document.body.classList.add('teacher-mode');expandAll();}
+  setTimeout(()=>window.print(),180);
+}
+document.addEventListener('click',e=>{
+  if(!targetShown || !e.target.classList.contains('tw')) return;
+  document.querySelectorAll('.tooltip').forEach(x=>x.remove());
+  const lemma=e.target.dataset.word;
+  const t=document.createElement('div');
+  t.className='tooltip';
+  t.textContent=lemma+'：'+(WORD_HELP[lemma]||'U1第一单元目标词');
+  document.body.appendChild(t);
+  const r=e.target.getBoundingClientRect();
+  t.style.left=Math.min(window.innerWidth-t.offsetWidth-12,Math.max(8,r.left))+'px';
+  t.style.top=Math.max(8,r.top-t.offsetHeight-8)+'px';
+  setTimeout(()=>t.remove(),3200);
+});
+document.querySelectorAll('input[type=radio]').forEach(x=>{
+  x.addEventListener('change',()=>localStorage.setItem(x.name,x.value));
+  const v=localStorage.getItem(x.name);
+  if(v!==null && x.value===v) x.checked=true;
+});
+</script>
+</body>
+</html>
