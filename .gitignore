@@ -8,10 +8,13 @@
 !**/.env.example
 **/*.log
 **/*.tsbuildinfo
+**/vite.config.js
+**/vite.config.d.ts
+**/capacitor.config.js
+**/capacitor.config.d.ts
 **/.gradle/
 **/build/
 **/local.properties
 **/supabase/.temp/
 *.apk
 *.exe
-

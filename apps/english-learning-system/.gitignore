@@ -3,6 +3,11 @@ dist/
 release/
 .env
 *.log
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+capacitor.config.js
+capacitor.config.d.ts
 .gradle-cache/
 supabase/.temp/
 android/.gradle/
