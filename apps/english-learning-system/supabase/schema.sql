@@ -99,6 +99,7 @@ create table public.vocabulary_cards (
   translation text not null default '',
   source_content_id uuid references public.content_items(id),
   legacy_source_id text,
+  details jsonb not null default '{}'::jsonb,
   mastery smallint not null default 0 check (mastery between 0 and 5),
   next_review_at timestamptz not null default now(),
   deleted_at timestamptz,

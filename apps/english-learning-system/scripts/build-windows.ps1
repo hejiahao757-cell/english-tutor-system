@@ -5,7 +5,7 @@ param(
 $ErrorActionPreference = 'Stop'
 $projectRoot = Split-Path -Parent $PSScriptRoot
 $electronDist = Join-Path $projectRoot 'node_modules\electron\dist'
-$releaseFile = Join-Path $projectRoot 'release\英语学习系统-0.1.0-便携版.exe'
+$releaseFile = Join-Path $projectRoot 'release\Tutor-Test-0.1.0-Portable.exe'
 $readyDirectory = Join-Path $projectRoot 'release-ready'
 
 function Get-Sha256([string]$Path) {
@@ -36,4 +36,3 @@ try {
   Copy-Item -LiteralPath $releaseFile -Destination $readyFile -Force
   [pscustomobject]@{ Path = $readyFile; SHA256 = Get-Sha256 $readyFile }
 } finally { Pop-Location }
-

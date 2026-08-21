@@ -44,9 +44,8 @@ try {
 
   $source = Join-Path $projectRoot 'android\app\build\outputs\apk\debug\app-debug.apk'
   $releaseDir = Join-Path $projectRoot 'release-ready'
-  $target = Join-Path $releaseDir '英语学习系统-0.1.0-安卓云端测试版.apk'
+  $target = Join-Path $releaseDir 'Tutor-Test-0.1.0-Android.apk'
   New-Item -ItemType Directory -Force -Path $releaseDir | Out-Null
   Copy-Item -LiteralPath $source -Destination $target -Force
   [pscustomobject]@{ Path = $target; SHA256 = Get-Sha256 $target }
 } finally { Pop-Location }
-

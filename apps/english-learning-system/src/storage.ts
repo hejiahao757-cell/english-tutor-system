@@ -54,7 +54,24 @@ export function mergeCards(user: AppUser, incoming: VocabularyCard[]) {
   for (const card of [...getCards().filter(card => card.userId === user.id), ...incoming]) {
     const key = card.word.trim().toLowerCase()
     const previous = merged.get(key)
-    if (!previous || new Date(card.updatedAt) >= new Date(previous.updatedAt)) merged.set(key, card)
+    if (!previous) {
+      merged.set(key, card)
+    } else if (new Date(card.updatedAt) >= new Date(previous.updatedAt)) {
+      merged.set(key, {
+        ...previous,
+        ...card,
+        partOfSpeech: card.partOfSpeech || previous.partOfSpeech,
+        definition: card.definition || previous.definition,
+        translation: card.translation || previous.translation,
+        sourceTitle: card.sourceTitle || previous.sourceTitle,
+        context: card.context || previous.context,
+        contexts: [...new Set([...(previous.contexts || []), ...(card.contexts || []), previous.context, card.context].filter((value): value is string => Boolean(value)))],
+        scope: card.scope || previous.scope,
+        family: card.family?.length ? card.family : previous.family,
+        phrases: card.phrases?.length ? card.phrases : previous.phrases,
+        contrasts: card.contrasts?.length ? card.contrasts : previous.contrasts,
+      })
+    }
   }
   localStorage.setItem(CARD_KEY, JSON.stringify([...merged.values(), ...others]))
   window.dispatchEvent(new CustomEvent('els:data-change'))

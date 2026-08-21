@@ -9,7 +9,7 @@ function createWindow() {
     minWidth: 980,
     minHeight: 680,
     backgroundColor: '#eef3f4',
-    title: '英语学习系统',
+    title: 'Tutor · 测试版',
     autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),

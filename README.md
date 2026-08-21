@@ -1,4 +1,4 @@
-# English Tutor System｜英语学习系统
+# Tutor｜测试版
 
 这是面向初高中衔接英语备课、课堂互动和课后复习的一体化项目。仓库已从零散 HTML 归档升级为可持续维护的软件源码库，同时完整保留现有题库、知识库和默听写内容。
 
@@ -52,4 +52,3 @@ Windows 便携版和 Android APK 不写入 Git 历史，统一放在 GitHub Rele
 - [后续备课交接](docs/HANDOFF_TO_CODEX.md)
 - [发布说明](docs/RELEASES.md)
 - [安全说明](docs/SECURITY.md)
-

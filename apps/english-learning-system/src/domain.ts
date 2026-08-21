@@ -52,7 +52,16 @@ export interface VocabularyCard {
   userId: string
   word: string
   translation: string
+  partOfSpeech?: string
+  definition?: string
   sourceContentId?: string
+  sourceTitle?: string
+  context?: string
+  contexts?: string[]
+  scope?: string
+  family?: Array<{ word: string, meaning: string, unit?: string }>
+  phrases?: Array<{ phrase: string, meaning: string }>
+  contrasts?: Array<{ word: string, meaning: string, unit?: string }>
   mastery: 0 | 1 | 2 | 3 | 4 | 5
   nextReviewAt: string
   updatedAt: string
