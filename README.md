@@ -1,71 +1,55 @@
-# English Tutor System
+# English Tutor System｜英语学习系统
 
-英语家教系统项目归档。
+这是面向初高中衔接英语备课、课堂互动和课后复习的一体化项目。仓库已从零散 HTML 归档升级为可持续维护的软件源码库，同时完整保留现有题库、知识库和默听写内容。
 
-## 历代 HTML 题库版本
+## 当前状态（2026-08-21）
 
-> 当前归档规则：保留已确认有效版本，废弃 V6_U1-U5 系统底座版本。
+- 已收录 9 份有效 HTML 教学内容，词汇范围衔接至 U1—U7。
+- 同一套 React + TypeScript 界面同时服务 Windows、Android 和浏览器。
+- 支持教师登录、学生代码 + 6 位 PIN 登录、跨网络云同步。
+- 支持题库、知识库、默听写、生词卡、做题记录和页面状态。
+- 原 HTML 的交互与 UI 作为教学内容继续保留，新软件负责统一入口、账号和同步。
 
-## V1｜中考688阅读训练
+## 仓库结构
 
-- 小学基础词汇 + 中考核心高频688词
-- A/B/C阅读训练
-- 答案解析
-- 原文翻译
-- 重点句翻译训练
+```text
+apps/english-learning-system/   主程序源码（Web / Windows / Android）
+  legacy-content/               已确认的历史及最新 HTML 教学内容
+  src/                          React 应用、状态和同步逻辑
+  electron/                     Windows 桌面壳
+  android/                      Android 工程
+  supabase/                     数据库、权限策略和云函数
+  scripts/                      构建与教师账号工具
+docs/                           需求、架构、内容清单和交接文档
+archives/                       历史归档说明
+```
 
-## V2｜初高中衔接 ABC 阅读体系
+## 本地启动
 
-- A篇：信息类阅读
-- B篇：故事类阅读
-- C篇：论述类阅读
-- 题型方法讲解
-- 阅读流程训练
+```powershell
+cd apps/english-learning-system
+npm ci
+Copy-Item .env.example .env
+# 在 .env 中填写 Supabase URL 和公开 anon key
+npm run dev
+```
 
-## V3｜D篇专项训练
+生产构建：`npm run build`。Windows 和 Android 的构建说明见应用目录中的 README。
 
-- 说明/议论类文章
-- 主旨、观点、逻辑关系训练
-- 教师讲解模式
+## 安装包
 
-## V4｜完形填空专项
+Windows 便携版和 Android APK 不写入 Git 历史，统一放在 GitHub Releases，并提供 SHA-256 校验值。这样源码仓库保持清晰，安装包也能按版本下载。
 
-- 三遍阅读法
-- 逐题展开解析
-- 关键句段翻译
-- 逻辑、情感、搭配等证据分析
+## 安全边界
 
-## V5｜完形三遍法 + 天赋评价 + 生词本互动体系（当前最高版本）
+仓库不包含教师密码、数据库密码、service-role key、`.env`、本机路径配置和个人登录凭据。前端只允许使用 Supabase 的公开 anon key；敏感操作由行级权限或云函数完成。
 
-- 多主题完形训练
-- 四大证据类型解析
-- 三遍阅读流程复盘
-- 积极型天赋评价系统
-- 生词本
-- 词卡系统
-- 学习记录设计
+详细文档：
 
-## 已废弃版本
+- [完整需求](docs/PROJECT_REQUIREMENTS.md)
+- [系统架构](docs/ARCHITECTURE.md)
+- [内容清单](docs/CONTENT_INVENTORY.md)
+- [后续备课交接](docs/HANDOFF_TO_CODEX.md)
+- [发布说明](docs/RELEASES.md)
+- [安全说明](docs/SECURITY.md)
 
-### V6｜U1-U5 系统底座
-
-状态：废弃，不进入正式版本路线。
-
-原因：后续系统设计方向调整。
-
-## 后续开发方向
-
-Codex 开发优先阅读：
-
-1. docs/HANDOFF_TO_CODEX.md
-2. docs/ARCHITECTURE.md
-3. docs/VERSION_HISTORY.md
-
-目标：逐步发展为完整英语学习系统：
-
-- 学生账号
-- 学习记录
-- 生词同步
-- 个性化反馈
-- 教师后台
-- 数据分析

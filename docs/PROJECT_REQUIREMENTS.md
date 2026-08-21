@@ -1,48 +1,60 @@
-# Project Requirements
+# 当前完整需求基线
 
-## Student Context
+更新日期：2026-08-21。后续备课与软件迭代均以本文件为最低要求，原有有效功能只增不减。
 
-Student previously received junior high English tutoring. Improvement came from:
+## 1. 内容范围与分类
 
-- vocabulary accumulation;
-- sentence understanding;
-- customized reading passages.
+- 词汇范围继承既有 U1—U5，并加入 U6、U7；新题应优先复现该范围内词汇。
+- 内容库分为：题库、知识库、默听写题目。
+- 题库覆盖七选五、完形填空、A/B/C/D 阅读、语法填空等高考及模拟题常见形式。
+- 每篇材料必须可独立用于教师备课、学生课堂作答和课后复习。
 
-Current course focus:
+## 2. 七选五
 
-- high school transition;
-- reading ability;
-- vocabulary activation;
-- exam skills.
+- 正文空位采用真实英语试卷的短横线与题号，不插入大块卡片。
+- 每组题综合包含段首、段中、段尾、承上启下等位置；有小标题和无小标题题型都要覆盖。
+- 方法讲解使用学生能听懂的直白语言，不堆砌抽象“索引”术语。
+- 解析逐题说明：空前后说了什么、候选句如何接上、干扰项为什么不行。
+- 教学示例应允许学生先独立作答，再展开完整讲解。
+- 每篇提供完整逐句中文翻译，而不是仅给大意。
 
-## Product Requirements
+## 3. 完形与语法填空
 
-### Reading
+- 完形、语法填空的正文空位统一采用短横线，视觉上接近真实高考试卷。
+- 完形选项在原题位置展示一次，不再额外生成重复的 A/B/C/D 选择模块。
+- 解锁后也不直接暴露选项中文；每组选项旁设置可单独展开的小型翻译/解析入口。
+- 语法填空括号提示词只显示一次，不在横线附近重复成小字。
+- 原文完整翻译、选项翻译、逐题解析均可收起和展开。
 
-A/B/C/D reading modules.
+## 4. 教学 UI 与解锁规则
 
-### Cloze
+- 延续“全功能动态备课终校版／密码版”的视觉语言和交互，不另起陌生 UI 风格。
+- 页面首次打开为纯考试状态，只显示像英语试卷一样的题目。
+- 未解锁时不得提前出现标题中文、正文翻译、答案或提示。
+- 输入教师密码后，才显示完整翻译、词卡、答案、逐题解析、讲解动画等备课功能。
+- 所有涉及的英语单词都应有对应中文词卡，不只覆盖一部分重点词。
+- 教学辅助模块应支持折叠，避免遮挡原题和讲解节奏。
+- 未解锁界面提供打印按钮；打印版必须黑白、无应用 UI、采用真实高考试卷式排版并保留答题空间。
 
-Requirements:
+## 5. 软件形态与账号
 
-- three-pass reading method;
-- explanation by evidence type;
-- positive talent evaluation.
+- Windows 与 Android 共用同一套内容和数据；Android 为移动端重点。
+- 教师使用邮箱和密码登录；学生使用教师创建的学生代码和 6 位 PIN 登录。
+- 学生可直接查看教师发布的内容。
+- 支持不同网络下同步，不依赖同一局域网。
+- 系统需要兼容原 HTML 的 localStorage 状态，并将可恢复快照纳入同步。
 
-### Vocabulary
+## 6. 学习痕迹
 
-Click word:
+- 保存做题答案、正确率、完成状态、阅读位置、展开状态、生词卡、生词本和必要的学习事件。
+- 同步采用“当前状态 + 事件记录”组合，既能恢复页面，也便于教师分析学习过程。
+- 只收集教学所需数据，不采集无关浏览历史、设备隐私或第三方行为。
+- 冲突处理必须可预测：单值状态按更新时间合并，列表与事件使用稳定 ID 去重。
 
-- meaning;
-- original context;
-- phrases;
-- word family;
-- synonyms/antonyms;
-- notebook save.
+## 7. 文件与发布管理
 
-### UX
+- 每一份正式 HTML 进入 `legacy-content` 并在内容清单登记。
+- 源码、数据库迁移、文档进入 Git；`.env`、密码、密钥、本机构建缓存不得进入仓库。
+- APK、EXE 等二进制通过 GitHub Releases 发布，并保留版本号与 SHA-256。
+- 新内容发布前至少执行一次生产构建和敏感信息检查。
 
-- collapsible explanations;
-- right-side navigation;
-- import/export learning data;
-- PC/mobile support.

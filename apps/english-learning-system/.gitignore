@@ -1,0 +1,16 @@
+node_modules/
+dist/
+release/
+.env
+*.log
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+capacitor.config.js
+capacitor.config.d.ts
+.gradle-cache/
+supabase/.temp/
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
