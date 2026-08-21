@@ -1,0 +1,17 @@
+**/node_modules/
+**/dist/
+**/release/
+**/release-final/
+**/release-ready/
+**/.env
+**/.env.*
+!**/.env.example
+**/*.log
+**/*.tsbuildinfo
+**/.gradle/
+**/build/
+**/local.properties
+**/supabase/.temp/
+*.apk
+*.exe
+

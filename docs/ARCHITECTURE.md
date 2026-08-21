@@ -1,60 +1,45 @@
-# System Architecture
+# 系统架构
 
-## Frontend Prototype Modules
+## 总览
 
-- Content engine
-- Question engine
-- Answer/analysis engine
-- Vocabulary card engine
-- Notebook engine
-- Evaluation engine
-- Persistence engine
+本项目采用一套共享前端、多种外壳的形态：React + TypeScript 负责统一界面和业务逻辑，Electron 提供 Windows 桌面版，Capacitor 提供 Android 版，浏览器版用于快速调试与备用访问。
 
-## Data Model
+```text
+历史/最新 HTML 内容
+        ↓
+React 内容入口与学习状态层
+   ↙          ↓          ↘
+浏览器     Electron     Capacitor
+              ↓
+      Supabase 云端数据层
+```
 
-profile:
-- student information
-- course metadata
+## 本地优先
 
-answers:
-- question id
-- selected option
-- correctness
-- timestamp
+- 题目内容和操作先在本机完成，弱网时不阻断课堂。
+- `storage.ts` 负责本地状态；`cloud.ts` 负责登录、上传、下载和合并。
+- 原 HTML 通过稳定内容 ID 接入，并保留其 localStorage 快照。
 
-notebook:
-- saved words
-- source sentence
-- word category
+## 云端
 
-grading:
-- scores
-- error types
+Supabase 提供：
 
- talent:
-- learning evaluation
-- growth report
+- Auth：教师与学生身份认证；
+- Postgres：班级、学生、内容分配、当前状态和学习事件；
+- Row Level Security：限制教师只能访问自己的学生，学生只能访问自己的数据；
+- Edge Function：创建学生等需要服务端权限的操作；
+- Storage：为未来的大文件内容与资源发布预留。
 
-ui:
-- preferences
-- expanded panels
+主要数据对象包括教师档案、学生档案、内容条目、内容分配、学习状态和学习事件。当前状态用于快速恢复；事件用于追溯作答、生词和学习过程。
 
-## Future Backend
+## 同步原则
 
-Suggested stack:
+- 每个可同步对象都有稳定 ID、用户 ID、内容 ID 和更新时间。
+- 单值状态采用较新的更新时间；集合类状态按稳定 ID 合并去重。
+- 学生端只接收已分配内容；教师端可查看和管理所属学生的数据。
+- 敏感权限只在数据库策略或云函数中实现，不把 service-role key 放入前端。
 
-Frontend:
-- React/Vue
-- TypeScript
+## 内容兼容层
 
-Backend:
-- Node/Nest or Python FastAPI
+`src/seed.ts` 是当前内容登记入口，`legacy-content` 保存原始 HTML。新增内容时保持原文件交互与样式，应用层只负责分类、搜索、打开、账号和同步，不重新篡改题目 UI。
 
-Database:
-- PostgreSQL
-
-Storage:
-- Object storage for course assets
-
-Authentication:
-- student / teacher accounts

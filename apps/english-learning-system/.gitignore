@@ -1,0 +1,11 @@
+node_modules/
+dist/
+release/
+.env
+*.log
+.gradle-cache/
+supabase/.temp/
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
