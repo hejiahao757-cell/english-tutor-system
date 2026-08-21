@@ -76,7 +76,9 @@ export async function pushEvents(events: ActivityEvent[]) {
 }
 
 function cardFromRow(row: Record<string, unknown>, user: AppUser): VocabularyCard {
+  const details = row.details && typeof row.details === 'object' ? row.details as Partial<VocabularyCard> : {}
   return {
+    ...details,
     id: String(row.id),
     userId: user.id,
     word: String(row.word),
@@ -90,11 +92,24 @@ function cardFromRow(row: Record<string, unknown>, user: AppUser): VocabularyCar
 
 async function syncCards(user: AppUser) {
   if (!cloud || user.role !== 'student') return 0
-  const { data: remoteRows, error: readError } = await cloud
+  let detailsSupported = true
+  const richResult = await cloud
     .from('vocabulary_cards')
-    .select('id, word, translation, legacy_source_id, mastery, next_review_at, updated_at')
+    .select('id, word, translation, legacy_source_id, mastery, next_review_at, updated_at, details')
     .eq('student_id', user.id)
     .is('deleted_at', null)
+  let remoteRows = richResult.data as Record<string, unknown>[] | null
+  let readError = richResult.error
+  if (readError && /details/i.test(readError.message)) {
+    detailsSupported = false
+    const fallback = await cloud
+      .from('vocabulary_cards')
+      .select('id, word, translation, legacy_source_id, mastery, next_review_at, updated_at')
+      .eq('student_id', user.id)
+      .is('deleted_at', null)
+    remoteRows = fallback.data as Record<string, unknown>[] | null
+    readError = fallback.error
+  }
   if (readError) throw readError
   mergeCards(user, (remoteRows || []).map(row => cardFromRow(row, user)))
   const latest = getCards().filter(card => card.userId === user.id)
@@ -105,12 +120,24 @@ async function syncCards(user: AppUser) {
     translation: card.translation,
     source_content_id: null,
     legacy_source_id: card.sourceContentId || null,
+    details: {
+      partOfSpeech: card.partOfSpeech,
+      definition: card.definition,
+      sourceTitle: card.sourceTitle,
+      context: card.context,
+      contexts: card.contexts,
+      scope: card.scope,
+      family: card.family,
+      phrases: card.phrases,
+      contrasts: card.contrasts,
+    },
     mastery: card.mastery,
     next_review_at: card.nextReviewAt,
     updated_at: card.updatedAt,
     deleted_at: null,
   }))
-  const { error } = await cloud.from('vocabulary_cards').upsert(rows, { onConflict: 'student_id,word' })
+  const payload = detailsSupported ? rows : rows.map(({ details: _details, ...row }) => row)
+  const { error } = await cloud.from('vocabulary_cards').upsert(payload, { onConflict: 'student_id,word' })
   if (error) throw error
   return rows.length
 }

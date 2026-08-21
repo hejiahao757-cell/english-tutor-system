@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import type { AppUser, ContentItem, ContentKind } from './domain'
 import { contentSeed, practiceWords } from './seed'
-import { activityLog, captureLegacyState, getCards, getEvents, markEventsSynced, saveCard } from './storage'
+import { activityLog, captureLegacyState, getCards, getEvents, markEventsSynced, mergeCards, saveCard } from './storage'
 import { cloud, createStudent, fetchTeacherActivity, isCloudConfigured, signIn, signOutCloud, syncAll, updateOwnPassword, type TeacherActivityRow } from './cloud'
+import { collectLegacyVocabulary, resolveLegacyWordDetails, stabilizeLegacyWordPanel } from './legacyBridge'
 
 type View = 'home' | 'library' | 'reader' | 'dictation' | 'words' | 'records' | 'settings'
 
@@ -49,7 +50,7 @@ function Login({ onLogin }: { onLogin: (user: AppUser) => void }) {
     <section className="login-story">
       <div className="brand-mark"><span>EN</span><i /></div>
       <p className="eyebrow">LESSON, MEMORY, GROWTH</p>
-      <h1>英语学习系统</h1>
+      <h1>Tutor</h1>
       <p className="lead">把课堂里的每一道题、每一个生词和每一次思考，稳稳带到下一台设备。</p>
       <div className="story-grid">
         <div><b>题库</b><small>高考题型 · 原卷作答</small></div>
@@ -60,7 +61,7 @@ function Login({ onLogin }: { onLogin: (user: AppUser) => void }) {
     </section>
     <section className="login-panel">
       <form className="login-card" onSubmit={submit}>
-        <span className="edition">内部测试版 0.1</span>
+        <span className="edition">Tutor · 测试版</span>
         <h2>继续今天的学习</h2>
         <p>{isCloudConfigured ? '选择身份后登录，系统会先恢复你的云端学习数据。' : '选择身份后登录。当前为本机验证模式。'}</p>
         <div className="role-switch">
@@ -81,23 +82,24 @@ function Login({ onLogin }: { onLogin: (user: AppUser) => void }) {
   </main>
 }
 
-function Sidebar({ view, setView, user, onLogout }: { view: View, setView: (v: View) => void, user: AppUser, onLogout: () => void }) {
+function Sidebar({ view, open, onNavigate, onClose, user, onLogout }: { view: View, open: boolean, onNavigate: (v: View) => void, onClose: () => void, user: AppUser, onLogout: () => void }) {
   const items: [View, string][] = [['home','今日'], ['library','内容库'], ['dictation','默听写'], ['words','生词本'], ['records','学习记录'], ['settings','设置']]
-  return <aside className="sidebar">
-    <div className="mini-brand"><span>EN</span><b>英语学习系统</b></div>
-    <nav>{items.map(([key, label]) => <button key={key} className={view === key ? 'active' : ''} onClick={() => setView(key)}><i>{icon(key)}</i><span>{label}</span></button>)}</nav>
+  const activeView = view === 'reader' ? 'library' : view
+  return <aside className={`sidebar ${open ? 'open' : ''}`} aria-hidden={!open}>
+    <div className="mini-brand"><span>T</span><b>Tutor <small>测试版</small></b><button className="drawer-close" onClick={onClose} aria-label="关闭功能栏">×</button></div>
+    <nav>{items.map(([key, label]) => <button key={key} className={activeView === key ? 'active' : ''} onClick={() => onNavigate(key)}><i>{icon(key)}</i><span>{label}</span></button>)}</nav>
     <div className="user-chip"><span>{user.displayName.slice(0, 2)}</span><div><b>{user.displayName}</b><small>{user.role === 'teacher' ? '教师端' : `学生 · ${user.studentCode}`}</small></div><button onClick={onLogout} title="退出">↪</button></div>
   </aside>
 }
 
-function Topbar({ title }: { title: string }) {
+function Topbar({ title, onMenu, onFocus, focusMode }: { title: string, onMenu: () => void, onFocus: () => void, focusMode: boolean }) {
   const [online, setOnline] = useState(navigator.onLine)
   useEffect(() => {
     const update = () => setOnline(navigator.onLine)
     addEventListener('online', update); addEventListener('offline', update)
     return () => { removeEventListener('online', update); removeEventListener('offline', update) }
   }, [])
-  return <header className="topbar"><div><p>英语衔接课 · U1—U7</p><h1>{title}</h1></div><div className={`network ${online ? 'online' : ''}`}><i />{online ? '网络正常' : '离线记录中'}</div></header>
+  return <header className="topbar"><button className="menu-button" onClick={onMenu} aria-label="打开功能栏"><span/><span/><span/></button><div className="topbar-title"><p>Tutor · U1—U7 · 测试版</p><h1>{title}</h1></div><div className="topbar-actions"><div className={`network ${online ? 'online' : ''}`}><i />{online ? '网络正常' : '离线记录中'}</div><button className="focus-button" onClick={onFocus}>{focusMode ? '退出全屏' : '全屏学习'}</button></div></header>
 }
 
 function Home({ user, go }: { user: AppUser, go: (v: View) => void }) {
@@ -137,6 +139,7 @@ function Library({ user, onOpen }: { user: AppUser, onOpen: (item: ContentItem) 
 
 function ContentReader({ user, item, onBack }: { user: AppUser, item: ContentItem, onBack: () => void }) {
   const frame = useRef<HTMLIFrameElement>(null)
+  const bridgeCleanup = useRef<() => void>(() => undefined)
   const [savedAt, setSavedAt] = useState('')
   const target = `./legacy-content/${encodeURIComponent(item.sourceFile)}`
   function saveProgress(log = false) {
@@ -146,11 +149,44 @@ function ContentReader({ user, item, onBack }: { user: AppUser, item: ContentIte
   }
   useEffect(() => {
     const timer = window.setInterval(() => saveProgress(false), 5000)
-    return () => { window.clearInterval(timer); captureLegacyState(user) }
+    return () => { window.clearInterval(timer); bridgeCleanup.current(); captureLegacyState(user) }
   }, [item.id, user.id])
+
+  function connectLegacyBridge() {
+    bridgeCleanup.current()
+    const frameWindow = frame.current?.contentWindow
+    const frameDocument = frame.current?.contentDocument
+    if (!frameWindow || !frameDocument) return
+    stabilizeLegacyWordPanel(frameDocument, frameWindow)
+
+    let timer = 0
+    const syncVocabulary = () => {
+      window.clearTimeout(timer)
+      timer = window.setTimeout(() => {
+        const imported = collectLegacyVocabulary(localStorage, {
+          userId: user.id,
+          contentId: item.id,
+          sourceTitle: item.title,
+          resolve: word => resolveLegacyWordDetails(frameWindow, word),
+        })
+        if (imported.length) mergeCards(user, imported)
+        captureLegacyState(user)
+      }, 120)
+    }
+    const onFrameClick = () => syncVocabulary()
+    const onFrameChange = () => saveProgress(false)
+    frameDocument.addEventListener('click', onFrameClick, true)
+    frameDocument.addEventListener('change', onFrameChange, true)
+    syncVocabulary()
+    bridgeCleanup.current = () => {
+      window.clearTimeout(timer)
+      frameDocument.removeEventListener('click', onFrameClick, true)
+      frameDocument.removeEventListener('change', onFrameChange, true)
+    }
+  }
   return <section className="reader-shell">
     <div className="reader-bar"><button className="outline-button" onClick={() => { saveProgress(true); onBack() }}>← 返回内容库</button><div><b>{item.title}</b><small>{savedAt ? `本机已保存 ${savedAt}` : '答题状态会自动保存'}</small></div><button className="primary compact" onClick={() => saveProgress(true)}>保存进度 <span>✓</span></button></div>
-    <iframe ref={frame} src={target} title={item.title} onLoad={() => saveProgress(false)} />
+    <iframe ref={frame} src={target} title={item.title} onLoad={() => { connectLegacyBridge(); saveProgress(false) }} />
   </section>
 }
 
@@ -171,9 +207,35 @@ function Dictation({ user }: { user: AppUser }) {
 
 function Words({ user }: { user: AppUser }) {
   const [version, setVersion] = useState(0)
+  const [expanded, setExpanded] = useState<string | null>(null)
+  useEffect(() => {
+    const refresh = () => setVersion(value => value + 1)
+    addEventListener('els:data-change', refresh)
+    return () => removeEventListener('els:data-change', refresh)
+  }, [])
   const cards = useMemo(() => getCards().filter(c => c.userId === user.id), [user.id, version])
   return <><section className="word-add"><div><h2>生词本</h2><p>随题保存，按掌握度复习；云端连接后在手机和电脑间同步。</p></div><button className="outline-button" onClick={() => { const sample = practiceWords[(cards.length + 3) % practiceWords.length]; saveCard(user, sample[0], sample[1]); setVersion(v => v + 1) }}>＋ 添加演示生词</button></section>
-  <div className="word-table"><div className="word-row heading"><span>单词</span><span>中文</span><span>掌握度</span><span>下次复习</span></div>{cards.length ? cards.map(card => <div className="word-row" key={card.id}><b>{card.word}</b><span>{card.translation}</span><span><i className="mastery" style={{'--level': `${card.mastery * 20}%`} as React.CSSProperties}/>{card.mastery}/5</span><small>{new Date(card.nextReviewAt).toLocaleDateString()}</small></div>) : <div className="empty"><b>Aa</b><h3>还没有生词</h3><p>在题目中点击单词卡，或用右上角按钮添加一个演示词。</p></div>}</div></>
+  <div className="vocabulary-collection">{cards.length ? cards.map(card => {
+    const isOpen = expanded === card.id
+    return <article className={`vocabulary-card ${isOpen ? 'open' : ''}`} key={card.id}>
+      <button className="vocabulary-summary" onClick={() => setExpanded(isOpen ? null : card.id)} aria-expanded={isOpen}>
+        <span className="word-letter">{card.word.slice(0, 1).toUpperCase()}</span>
+        <span className="word-brief"><b>{card.word}</b><span>{card.partOfSpeech && <em>{card.partOfSpeech}</em>}{card.translation}</span></span>
+        <span className="word-source">{card.scope || '课堂生词'}<small>{card.sourceTitle || 'Tutor 生词卡'}</small></span>
+        <span className="expand-mark">{isOpen ? '收起 −' : '展开 ＋'}</span>
+      </button>
+      {isOpen && <div className="vocabulary-detail">
+        <section className="card-core"><p>核心释义 · 先认清本词</p><h3>{card.word}</h3><div><b>{card.partOfSpeech}</b>{card.translation}</div><small>词表来源：{card.scope || '课堂语境'}</small></section>
+        {card.context && <section className="card-context"><p>原文语境 · 把词放回句子</p><blockquote>{card.context}</blockquote>{card.contexts && card.contexts.length > 1 && <small>已收录 {card.contexts.length} 个原文语境</small>}</section>}
+        <div className="detail-columns">
+          <section><h4>同根词族 · 一个带一片</h4>{card.family?.length ? card.family.map(item => <div className="detail-item" key={`${item.word}-${item.meaning}`}><b>{item.word}</b><span>{item.meaning}</span>{item.unit && <small>{item.unit}</small>}</div>) : <p className="detail-empty">当前词卡没有必须扩展的派生词。</p>}</section>
+          <section><h4>必背搭配 · 做题就考这个</h4>{card.phrases?.length ? card.phrases.map(item => <div className="detail-item" key={`${item.phrase}-${item.meaning}`}><b>{item.phrase}</b><span>{item.meaning}</span></div>) : <p className="detail-empty">优先记住本词在原句中的搭配。</p>}</section>
+          <section><h4>反义 / 易混 · 成对记</h4>{card.contrasts?.length ? card.contrasts.map(item => <div className="detail-item" key={`${item.word}-${item.meaning}`}><b>{item.word}</b><span>{item.meaning}</span>{item.unit && <small>{item.unit}</small>}</div>) : <p className="detail-empty">当前语境没有必须硬记的易混词。</p>}</section>
+        </div>
+        <footer><span><i className="mastery" style={{'--level': `${card.mastery * 20}%`} as React.CSSProperties}/>{card.mastery}/5 掌握度</span><small>下次复习：{new Date(card.nextReviewAt).toLocaleDateString()}</small></footer>
+      </div>}
+    </article>
+  }) : <div className="empty"><b>Aa</b><h3>还没有生词</h3><p>在题目中打开单词卡并点击“加入生词本”，这里会立即出现对应词卡。</p></div>}</div></>
 }
 
 const eventNames: Record<string,string> = { login:'登录系统', logout:'退出系统', content_open:'打开内容', answer_change:'作答记录', submission:'提交答案', analysis_open:'展开解析', translation_open:'展开翻译', word_saved:'保存生词', word_reviewed:'复习生词', audio_played:'播放听力', print:'打印试卷', sync_started:'开始同步', sync_completed:'同步完成', sync_failed:'同步失败' }
@@ -261,9 +323,77 @@ export default function App() {
   })
   const [view, setView] = useState<View>('home')
   const [readerItem, setReaderItem] = useState<ContentItem | null>(null)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [focusMode, setFocusMode] = useState(false)
+  useEffect(() => {
+    if (!user) return
+    try {
+      const saved = JSON.parse(localStorage.getItem(`tutor.workspace.v1.${user.id}`) || '{}') as { view?: View, readerItemId?: string }
+      const restoredReader = contentSeed.find(item => item.id === saved.readerItemId) || null
+      setReaderItem(restoredReader)
+      setView(saved.view === 'reader' && !restoredReader ? 'library' : saved.view || 'home')
+    } catch {
+      setView('home')
+      setReaderItem(null)
+    }
+  }, [user?.id])
+  useEffect(() => {
+    if (!user) return
+    localStorage.setItem(`tutor.workspace.v1.${user.id}`, JSON.stringify({ view, readerItemId: readerItem?.id }))
+  }, [user?.id, view, readerItem?.id])
+  useEffect(() => {
+    const onFullscreenChange = () => { if (!document.fullscreenElement) setFocusMode(false) }
+    document.addEventListener('fullscreenchange', onFullscreenChange)
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange)
+  }, [])
+  useEffect(() => {
+    if (!import.meta.env.DEV || !user) return
+    const scenario = new URLSearchParams(location.search).get('qaScenario')
+    if (scenario === 'focus-mode') {
+      setFocusMode(true)
+      return
+    }
+    if (scenario !== 'legacy-card') return
+    localStorage.setItem('english_tutor_set04_vocab_v1', JSON.stringify({ stable: { word: 'stable', context: 'The system is becoming stable.', contexts: ['The system is becoming stable.'], scope: 'U7', time: Date.now() } }))
+    const lesson = contentSeed.find(item => item.id.includes('u1-u7')) || contentSeed[0]
+    setReaderItem(lesson)
+    setView('reader')
+    const switchTimer = window.setTimeout(() => setView('words'), 900)
+    const expandTimer = window.setTimeout(() => document.querySelector<HTMLButtonElement>('.vocabulary-summary')?.click(), 1300)
+    return () => {
+      window.clearTimeout(switchTimer)
+      window.clearTimeout(expandTimer)
+    }
+  }, [user?.id])
   if (!user) return <Login onLogin={setUser} />
   const titles: Record<View,string> = { home:'今天', library:'内容库', reader:'题目', dictation:'默听写', words:'生词本', records:'学习记录', settings:'设置' }
-  function openReader(item: ContentItem) { setReaderItem(item); setView('reader') }
+  function navigate(nextView: View) { setView(nextView); setSidebarOpen(false) }
+  function openReader(item: ContentItem) { setReaderItem(item); navigate('reader') }
+  async function toggleFocusMode() {
+    if (focusMode) {
+      if (document.fullscreenElement) await document.exitFullscreen().catch(() => undefined)
+      setFocusMode(false)
+    } else {
+      setFocusMode(true)
+      if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen().catch(() => undefined)
+    }
+  }
   async function logout() { activityLog(user, 'logout'); await signOutCloud(); localStorage.removeItem('els.current-user.v1'); setUser(null) }
-  return <div className="app-shell"><Sidebar view={view} setView={setView} user={user} onLogout={logout}/><main className="workspace"><Topbar title={titles[view]}/><div className={`page-content ${view === 'reader' ? 'reader-page' : ''}`}>{view === 'home' && <Home user={user} go={setView}/>} {view === 'library' && <Library user={user} onOpen={openReader}/>} {view === 'reader' && readerItem && <ContentReader user={user} item={readerItem} onBack={() => setView('library')}/>} {view === 'dictation' && <Dictation user={user}/>} {view === 'words' && <Words user={user}/>} {view === 'records' && <Records user={user}/>} {view === 'settings' && <Settings user={user}/>}</div></main></div>
+  return <div className={`app-shell ${focusMode ? 'focus-mode' : ''}`} data-view={view}>
+    <button className={`sidebar-scrim ${sidebarOpen ? 'open' : ''}`} onClick={() => setSidebarOpen(false)} aria-label="关闭功能栏" />
+    <Sidebar view={view} open={sidebarOpen} onNavigate={navigate} onClose={() => setSidebarOpen(false)} user={user} onLogout={logout}/>
+    <main className="workspace">
+      <Topbar title={titles[view]} onMenu={() => setSidebarOpen(true)} onFocus={() => void toggleFocusMode()} focusMode={focusMode}/>
+      <div className="workspace-body">
+        <div className={`page-content view-pane ${view === 'home' ? 'active' : ''}`} aria-hidden={view !== 'home'}><Home user={user} go={navigate}/></div>
+        <div className={`page-content view-pane ${view === 'library' ? 'active' : ''}`} aria-hidden={view !== 'library'}><Library user={user} onOpen={openReader}/></div>
+        <div className={`page-content reader-page view-pane ${view === 'reader' ? 'active' : ''}`} aria-hidden={view !== 'reader'}>{readerItem && <ContentReader key={readerItem.id} user={user} item={readerItem} onBack={() => navigate('library')}/>}</div>
+        <div className={`page-content view-pane ${view === 'dictation' ? 'active' : ''}`} aria-hidden={view !== 'dictation'}><Dictation user={user}/></div>
+        <div className={`page-content view-pane ${view === 'words' ? 'active' : ''}`} aria-hidden={view !== 'words'}><Words user={user}/></div>
+        <div className={`page-content view-pane ${view === 'records' ? 'active' : ''}`} aria-hidden={view !== 'records'}><Records user={user}/></div>
+        <div className={`page-content view-pane ${view === 'settings' ? 'active' : ''}`} aria-hidden={view !== 'settings'}><Settings user={user}/></div>
+      </div>
+      {focusMode && <div className="focus-controls"><button onClick={() => setSidebarOpen(true)}>☰ 功能</button><button onClick={() => void toggleFocusMode()}>退出全屏</button></div>}
+    </main>
+  </div>
 }
