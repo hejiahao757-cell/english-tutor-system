@@ -50,6 +50,7 @@
       "package.json"
     ],
     "win": {
+      "icon": "build/tutor-icon.ico",
       "target": [
         "portable"
       ],
